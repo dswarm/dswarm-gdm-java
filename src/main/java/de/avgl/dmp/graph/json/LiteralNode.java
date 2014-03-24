@@ -3,35 +3,42 @@ package de.avgl.dmp.graph.json;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
- * 
  * @author tgaengler
- *
  */
 @XmlRootElement
 public class LiteralNode extends Node {
 
 	@XmlElement(name = "v")
-	private String	value = null;
+	private String	value	= null;
 
-	public LiteralNode(final long idArg, final String valueArg) {
+	public LiteralNode(final String valueArg) {
+
+		super(NodeType.Literal);
+
+		value = valueArg;
+	}
+
+	@JsonCreator
+	public LiteralNode(@JsonProperty("id") final long idArg, @JsonProperty("v") final String valueArg) {
 
 		super(idArg, NodeType.Literal);
 
 		value = valueArg;
 	}
 
-	
 	public String getValue() {
-		
+
 		return value;
 	}
-	
+
 	public void setValue(final String valueArg) {
-		
+
 		value = valueArg;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -40,7 +47,6 @@ public class LiteralNode extends Node {
 		result = prime * result + ((value == null) ? 0 : value.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
