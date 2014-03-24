@@ -3,7 +3,9 @@ package de.avgl.dmp.graph.json;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author tgaengler
@@ -17,7 +19,8 @@ public class Node {
 	@JsonIgnore
 	private final NodeType	type;
 
-	public Node(final long idArg) {
+	@JsonCreator
+	public Node(@JsonProperty("id") final long idArg) {
 
 		id = Long.valueOf(idArg);
 		type = NodeType.BNode;
