@@ -4,21 +4,26 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+import de.avgl.dmp.graph.json.deserializer.StatementDeserializer;
+
 /**
  * @author tgaengler
  */
 @XmlRootElement
+@JsonDeserialize(using = StatementDeserializer.class)
 public class Statement {
 
 	@XmlID
 	private Long		id			= null;
-	
+
 	@XmlElement(name = "s")
 	private Node		subject		= null;
-	
+
 	@XmlElement(name = "p")
 	private Predicate	predicate	= null;
-	
+
 	@XmlElement(name = "o")
 	private Node		object		= null;
 
@@ -30,7 +35,7 @@ public class Statement {
 
 		id = idArg;
 	}
-	
+
 	public Statement(final Node subjectArg, final Predicate predicateArg, final Node objectArg) {
 
 		setSubject(subjectArg);
@@ -62,9 +67,9 @@ public class Statement {
 	}
 
 	public void setSubject(final Node subjectArg) {
-		
-		if(subjectArg.getType().equals(NodeType.Literal)) {
-			
+
+		if (subjectArg.getType().equals(NodeType.Literal)) {
+
 			throw new IllegalArgumentException("literals are not allowed as subject");
 		}
 
