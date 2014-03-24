@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Node {
 
 	@XmlID
-	private Long			id = null;
+	private Long			id	= null;
 
 	@JsonIgnore
 	private final NodeType	type;
@@ -29,6 +29,11 @@ public class Node {
 	public Node(final long idArg, final NodeType typeArg) {
 
 		id = Long.valueOf(idArg);
+		type = typeArg;
+	}
+
+	protected Node(final NodeType typeArg) {
+
 		type = typeArg;
 	}
 

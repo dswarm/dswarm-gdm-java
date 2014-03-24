@@ -2,6 +2,9 @@ package de.avgl.dmp.graph.json;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * @author tgaengler
  */
@@ -10,7 +13,15 @@ public class ResourceNode extends Node {
 
 	private String	uri;
 
-	public ResourceNode(final long idArg, final String uriArg) {
+	public ResourceNode(final String uriArg) {
+
+		super(NodeType.Resource);
+
+		uri = uriArg;
+	}
+
+	@JsonCreator
+	public ResourceNode(@JsonProperty("id") final long idArg, @JsonProperty("uri") final String uriArg) {
 
 		super(idArg, NodeType.Resource);
 
