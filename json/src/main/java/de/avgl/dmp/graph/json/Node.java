@@ -1,12 +1,20 @@
 package de.avgl.dmp.graph.json;
 
+import javax.xml.bind.annotation.XmlID;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author tgaengler
  */
+@XmlRootElement
 public class Node {
 
-	private Long			id;
+	@XmlID
+	private Long			id = null;
 
+	@JsonIgnore
 	private final NodeType	type;
 
 	public Node(final long idArg) {
@@ -34,5 +42,33 @@ public class Node {
 	public NodeType getType() {
 
 		return type;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Node other = (Node) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (type != other.type)
+			return false;
+		return true;
 	}
 }
