@@ -17,9 +17,7 @@ import de.avgl.dmp.graph.json.ResourceNode;
 import de.avgl.dmp.graph.json.Statement;
 
 /**
- * 
  * @author tgaengler
- *
  */
 public class StatementDeserializer extends JsonDeserializer<Statement> {
 
@@ -104,6 +102,11 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 
 			// bnode
 			object = objectNode.traverse(oc).readValueAs(Node.class);
+		}
+
+		if (id == null) {
+			
+			return new Statement(subject, predicate, object);
 		}
 
 		return new Statement(id, subject, predicate, object);

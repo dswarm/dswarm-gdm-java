@@ -35,6 +35,11 @@ public class Model {
 		return this;
 	}
 
+	public int size() {
+
+		return resources.size();
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
