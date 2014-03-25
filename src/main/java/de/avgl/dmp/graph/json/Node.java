@@ -1,8 +1,5 @@
 package de.avgl.dmp.graph.json;
 
-import javax.xml.bind.annotation.XmlID;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,10 +7,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * @author tgaengler
  */
-@XmlRootElement
 public class Node {
 
-	@XmlID
 	private Long			id	= null;
 
 	@JsonIgnore

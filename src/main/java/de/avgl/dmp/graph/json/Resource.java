@@ -3,9 +3,6 @@ package de.avgl.dmp.graph.json;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.xml.bind.annotation.XmlID;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -17,12 +14,10 @@ import de.avgl.dmp.graph.json.serializer.ResourceSerializer;
  * @author tgaengler
  *
  */
-@XmlRootElement
 @JsonDeserialize(using = ResourceDeserializer.class)
 @JsonSerialize(using = ResourceSerializer.class)
 public class Resource {
 
-	@XmlID
 	private String			uri = null;
 
 	private Set<Statement>	statements	= new HashSet<Statement>();

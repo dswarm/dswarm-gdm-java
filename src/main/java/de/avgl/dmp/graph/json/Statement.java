@@ -1,9 +1,6 @@
 package de.avgl.dmp.graph.json;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlID;
-import javax.xml.bind.annotation.XmlRootElement;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import de.avgl.dmp.graph.json.deserializer.StatementDeserializer;
@@ -11,20 +8,18 @@ import de.avgl.dmp.graph.json.deserializer.StatementDeserializer;
 /**
  * @author tgaengler
  */
-@XmlRootElement
 @JsonDeserialize(using = StatementDeserializer.class)
 public class Statement {
 
-	@XmlID
 	private Long		id			= null;
 
-	@XmlElement(name = "s")
+	@JsonProperty("s")
 	private Node		subject		= null;
 
-	@XmlElement(name = "p")
+	@JsonProperty("p")
 	private Predicate	predicate	= null;
 
-	@XmlElement(name = "o")
+	@JsonProperty("o")
 	private Node		object		= null;
 
 	public Statement() {

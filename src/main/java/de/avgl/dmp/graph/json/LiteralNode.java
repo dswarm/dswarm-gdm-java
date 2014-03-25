@@ -1,18 +1,14 @@
 package de.avgl.dmp.graph.json;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author tgaengler
  */
-@XmlRootElement
 public class LiteralNode extends Node {
 
-	@XmlElement(name = "v")
+	@JsonProperty("v")
 	private String	value	= null;
 
 	public LiteralNode(final String valueArg) {

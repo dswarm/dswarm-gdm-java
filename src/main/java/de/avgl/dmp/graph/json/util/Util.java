@@ -3,7 +3,6 @@ package de.avgl.dmp.graph.json.util;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 
 /**
  * 
@@ -24,8 +23,7 @@ public class Util {
 
 	static {
 		MAPPER = new ObjectMapper();
-		final JaxbAnnotationModule module = new JaxbAnnotationModule();
-		MAPPER.registerModule(module).setSerializationInclusion(Include.NON_NULL).setSerializationInclusion(Include.NON_EMPTY);
+		MAPPER.setSerializationInclusion(Include.NON_NULL).setSerializationInclusion(Include.NON_EMPTY);
 
 		FACTORY = MAPPER.getNodeFactory();
 	}

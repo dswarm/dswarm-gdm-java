@@ -1,14 +1,11 @@
 package de.avgl.dmp.graph.json;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author tgaengler
  */
-@XmlRootElement
 public class ResourceNode extends Node {
 
 	private String	uri;
