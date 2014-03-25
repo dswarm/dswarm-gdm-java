@@ -35,9 +35,16 @@ public class Model {
 		return this;
 	}
 
-	public int size() {
+	public long size() {
+		
+		long size = 0;
+		
+		for(final Resource resource : resources) {
+			
+			size += resource.size();
+		}
 
-		return resources.size();
+		return size;
 	}
 
 	@Override
