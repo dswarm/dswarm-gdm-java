@@ -22,33 +22,24 @@ public class ResourceSerializer extends JsonSerializer<Resource> {
 
 		if (value != null && value.getUri() != null) {
 
-			jgen.writeStartObject();
-			jgen.writeFieldName(value.getUri());
-
 			final Set<Statement> statements = value.getStatements();
 
 			if (statements != null && !statements.isEmpty()) {
 
-				jgen.writeStartArray();
+				jgen.writeStartObject();
+				jgen.writeFieldName(value.getUri());
 
-				int i = 1;
+				jgen.writeStartArray();
 
 				for (final Statement statement : statements) {
 
 					jgen.writeObject(statement);
-
-					if (i < statements.size()) {
-
-						jgen.writeRaw(',');
-					}
-
-					i++;
 				}
 
 				jgen.writeEndArray();
-			}
 
-			jgen.writeEndObject();
+				jgen.writeEndObject();
+			}
 		}
 	}
 }
