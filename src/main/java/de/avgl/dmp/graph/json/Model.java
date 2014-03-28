@@ -1,6 +1,8 @@
 package de.avgl.dmp.graph.json;
 
-import java.util.HashSet;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -16,28 +18,51 @@ import de.avgl.dmp.graph.json.serializer.ModelSerializer;
 @JsonSerialize(using = ModelSerializer.class)
 public class Model {
 
-	private Set<Resource>	resources	= new HashSet<Resource>();
+	private Map<String, Resource>	resources	= new HashMap<String, Resource>();
 
-	public Set<Resource> getResources() {
+	public Collection<Resource> getResources() {
 
-		return resources;
+		return resources.values();
 	}
 
 	public void setResources(final Set<Resource> resourcesArg) {
 
-		resources = resourcesArg;
+		resources.clear();
+
+		if (resourcesArg != null) {
+
+			for (final Resource resource : resourcesArg) {
+
+				resources.put(resource.getUri(), resource);
+			}
+		}
 	}
 
 	public Model addResource(final Resource resource) {
 
-		resources.add(resource);
+		if (resource != null) {
+
+			resources.put(resource.getUri(), resource);
+		}
 
 		return this;
 	}
+	
+	public Resource getResource(final String resourceUri) {
+		
+		return resources.get(resourceUri);
+	}
 
-	public int size() {
+	public long size() {
 
-		return resources.size();
+		long size = 0;
+
+		for (final Resource resource : resources.values()) {
+
+			size += resource.size();
+		}
+
+		return size;
 	}
 
 	@Override

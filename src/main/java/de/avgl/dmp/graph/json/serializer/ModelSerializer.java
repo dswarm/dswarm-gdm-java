@@ -1,7 +1,7 @@
 package de.avgl.dmp.graph.json.serializer;
 
 import java.io.IOException;
-import java.util.Set;
+import java.util.Collection;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -19,7 +19,7 @@ public class ModelSerializer extends JsonSerializer<Model> {
 	@Override
 	public void serialize(final Model value, final JsonGenerator jgen, final SerializerProvider provider) throws IOException, JsonProcessingException {
 
-		final Set<Resource> resources = value.getResources();
+		final Collection<Resource> resources = value.getResources();
 
 		if (resources != null && !resources.isEmpty()) {
 

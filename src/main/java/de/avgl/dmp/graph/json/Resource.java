@@ -10,15 +10,13 @@ import de.avgl.dmp.graph.json.deserializer.ResourceDeserializer;
 import de.avgl.dmp.graph.json.serializer.ResourceSerializer;
 
 /**
- * 
  * @author tgaengler
- *
  */
 @JsonDeserialize(using = ResourceDeserializer.class)
 @JsonSerialize(using = ResourceSerializer.class)
 public class Resource {
 
-	private String			uri = null;
+	private String			uri			= null;
 
 	private Set<Statement>	statements	= new HashSet<Statement>();
 
@@ -70,6 +68,11 @@ public class Resource {
 		statements.add(statement);
 
 		return this;
+	}
+
+	public int size() {
+
+		return statements.size();
 	}
 
 	@Override
