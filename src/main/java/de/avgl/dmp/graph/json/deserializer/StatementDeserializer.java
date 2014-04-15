@@ -104,11 +104,36 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 			object = objectNode.traverse(oc).readValueAs(Node.class);
 		}
 
-		if (id == null) {
-			
+		final JsonNode orderNode = node.get("order");
+
+		Long order = null;
+
+		if (orderNode != null) {
+
+			try {
+
+				order = Long.valueOf(orderNode.asLong());
+			} catch (final Exception e) {
+
+				order = null;
+			}
+		}
+
+		if (id == null && order == null) {
+
 			return new Statement(subject, predicate, object);
 		}
 
-		return new Statement(id, subject, predicate, object);
+		if (id == null && order != null) {
+
+			return new Statement(subject, predicate, object, order);
+		}
+
+		if (id != null && order == null) {
+
+			return new Statement(id, subject, predicate, object);
+		}
+
+		return new Statement(id, subject, predicate, object, order);
 	}
 }

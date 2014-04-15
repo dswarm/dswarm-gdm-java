@@ -1,6 +1,6 @@
 package de.avgl.dmp.graph.json;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -18,7 +18,10 @@ public class Resource {
 
 	private String			uri			= null;
 
-	private Set<Statement>	statements	= new HashSet<Statement>();
+	/**
+	 * ... linked hash set to keep the original order of the statements ...
+	 */
+	private Set<Statement>	statements	= new LinkedHashSet<Statement>();
 
 	public Resource(final String uriArg) {
 
@@ -61,9 +64,27 @@ public class Resource {
 		return this;
 	}
 
+	public Resource addStatement(final long id, final Node subject, final Predicate predicate, final Node object, final Long order) {
+
+		final Statement statement = new Statement(id, subject, predicate, object, order);
+
+		statements.add(statement);
+
+		return this;
+	}
+
 	public Resource addStatement(final Node subject, final Predicate predicate, final Node object) {
 
 		final Statement statement = new Statement(subject, predicate, object);
+
+		statements.add(statement);
+
+		return this;
+	}
+
+	public Resource addStatement(final Node subject, final Predicate predicate, final Node object, final Long order) {
+
+		final Statement statement = new Statement(subject, predicate, object, order);
 
 		statements.add(statement);
 

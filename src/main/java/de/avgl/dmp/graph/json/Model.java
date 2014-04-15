@@ -1,7 +1,7 @@
 package de.avgl.dmp.graph.json;
 
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -18,7 +18,10 @@ import de.avgl.dmp.graph.json.serializer.ModelSerializer;
 @JsonSerialize(using = ModelSerializer.class)
 public class Model {
 
-	private Map<String, Resource>	resources	= new HashMap<String, Resource>();
+	/**
+	 * ... linked hash set to keep the original order of the resources ...
+	 */
+	private Map<String, Resource>	resources	= new LinkedHashMap<String, Resource>();
 
 	public Collection<Resource> getResources() {
 

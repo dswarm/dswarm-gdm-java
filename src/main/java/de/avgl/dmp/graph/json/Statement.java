@@ -22,6 +22,13 @@ public class Statement {
 	@JsonProperty("o")
 	private Node		object		= null;
 
+	/**
+	 * Optional property of a statement, which doesn't represent a total order of a statement that belongs to a certain resource,
+	 * but rather then it represent a order of values (objects) to a certain subject + predicate key. The order number should be a
+	 * non-negative number.
+	 */
+	private Long		order		= null;
+
 	public Statement() {
 
 	}
@@ -38,12 +45,29 @@ public class Statement {
 		setObject(objectArg);
 	}
 
+	public Statement(final Node subjectArg, final Predicate predicateArg, final Node objectArg, final Long orderArg) {
+
+		setSubject(subjectArg);
+		setPredicate(predicateArg);
+		setObject(objectArg);
+		setOrder(orderArg);
+	}
+
 	public Statement(final long idArg, final Node subjectArg, final Predicate predicateArg, final Node objectArg) {
 
 		id = idArg;
 		setSubject(subjectArg);
 		setPredicate(predicateArg);
 		setObject(objectArg);
+	}
+
+	public Statement(final long idArg, final Node subjectArg, final Predicate predicateArg, final Node objectArg, final Long orderArg) {
+
+		id = idArg;
+		setSubject(subjectArg);
+		setPredicate(predicateArg);
+		setObject(objectArg);
+		setOrder(orderArg);
 	}
 
 	public Long getId() {
@@ -91,6 +115,21 @@ public class Statement {
 		object = objectArg;
 	}
 
+	public Long getOrder() {
+
+		return order;
+	}
+
+	public void setOrder(final Long orderArg) {
+
+		if (orderArg != null && orderArg.longValue() < 0) {
+
+			throw new IllegalArgumentException("the order of a statement should be a non-negative number");
+		}
+
+		order = orderArg;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -99,6 +138,7 @@ public class Statement {
 		result = prime * result + ((object == null) ? 0 : object.hashCode());
 		result = prime * result + ((predicate == null) ? 0 : predicate.hashCode());
 		result = prime * result + ((subject == null) ? 0 : subject.hashCode());
+		result = prime * result + ((order == null) ? 0 : order.hashCode());
 		return result;
 	}
 
@@ -120,6 +160,11 @@ public class Statement {
 			if (other.object != null)
 				return false;
 		} else if (!object.equals(other.object))
+			return false;
+		if (order == null) {
+			if (other.order != null)
+				return false;
+		} else if (!order.equals(other.order))
 			return false;
 		if (predicate == null) {
 			if (other.predicate != null)
