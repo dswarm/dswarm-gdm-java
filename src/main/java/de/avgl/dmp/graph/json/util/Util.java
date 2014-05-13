@@ -23,7 +23,10 @@ public class Util {
 
 	static {
 		MAPPER = new ObjectMapper();
-		MAPPER.setSerializationInclusion(Include.NON_NULL).setSerializationInclusion(Include.NON_EMPTY);
+		MAPPER.setSerializationInclusion(Include.NON_NULL);
+
+				// enable this, if it will be required again
+				//.setSerializationInclusion(Include.NON_EMPTY);
 
 		FACTORY = MAPPER.getNodeFactory();
 	}
