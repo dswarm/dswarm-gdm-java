@@ -64,9 +64,27 @@ public class Resource {
 		return this;
 	}
 
+	public Resource addStatement(final long id, final String uuid, final Node subject, final Predicate predicate, final Node object) {
+
+		final Statement statement = new Statement(id, uuid, subject, predicate, object);
+
+		statements.add(statement);
+
+		return this;
+	}
+
 	public Resource addStatement(final long id, final Node subject, final Predicate predicate, final Node object, final Long order) {
 
 		final Statement statement = new Statement(id, subject, predicate, object, order);
+
+		statements.add(statement);
+
+		return this;
+	}
+
+	public Resource addStatement(final long id, final String uuid, final Node subject, final Predicate predicate, final Node object, final Long order) {
+
+		final Statement statement = new Statement(id, uuid, subject, predicate, object, order);
 
 		statements.add(statement);
 
@@ -82,9 +100,27 @@ public class Resource {
 		return this;
 	}
 
+	public Resource addStatement(final String uuid, final Node subject, final Predicate predicate, final Node object) {
+
+		final Statement statement = new Statement(uuid, subject, predicate, object);
+
+		statements.add(statement);
+
+		return this;
+	}
+
 	public Resource addStatement(final Node subject, final Predicate predicate, final Node object, final Long order) {
 
 		final Statement statement = new Statement(subject, predicate, object, order);
+
+		statements.add(statement);
+
+		return this;
+	}
+
+	public Resource addStatement(final String uuid, final Node subject, final Predicate predicate, final Node object, final Long order) {
+
+		final Statement statement = new Statement(uuid, subject, predicate, object, order);
 
 		statements.add(statement);
 

@@ -53,6 +53,15 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 			}
 		}
 
+		final JsonNode uuidNode = node.get("uuid");
+
+		String uuid = null;
+
+		if (uuidNode != null) {
+
+			uuid = uuidNode.asText();
+		}
+
 		final JsonNode subjectNode = node.get("s");
 
 		if (subjectNode == null) {
@@ -119,21 +128,41 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 			}
 		}
 
-		if (id == null && order == null) {
+		if (id == null && uuid == null && order == null) {
 
 			return new Statement(subject, predicate, object);
 		}
 
-		if (id == null && order != null) {
+		if (id == null && uuid != null && order == null) {
+
+			return new Statement(uuid, subject, predicate, object);
+		}
+
+		if (id == null && uuid != null && order != null) {
+
+			return new Statement(uuid, subject, predicate, object, order);
+		}
+
+		if (id == null && uuid == null && order != null) {
 
 			return new Statement(subject, predicate, object, order);
 		}
 
-		if (id != null && order == null) {
+		if (id != null && uuid != null && order == null) {
+
+			return new Statement(id, uuid, subject, predicate, object);
+		}
+
+		if (id != null && uuid == null && order == null) {
 
 			return new Statement(id, subject, predicate, object);
 		}
 
-		return new Statement(id, subject, predicate, object, order);
+		if (id != null && uuid == null && order != null) {
+
+			return new Statement(id, subject, predicate, object, order);
+		}
+
+		return new Statement(id, uuid, subject, predicate, object, order);
 	}
 }
