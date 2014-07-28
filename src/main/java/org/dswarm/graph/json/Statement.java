@@ -13,6 +13,8 @@ public class Statement {
 
 	private Long		id			= null;
 
+	private String		uuid			= null;
+
 	@JsonProperty("s")
 	private Node		subject		= null;
 
@@ -38,8 +40,28 @@ public class Statement {
 		id = idArg;
 	}
 
+	public Statement(final String uuidArg) {
+
+		uuid = uuidArg;
+	}
+
+	public Statement(final long idArg, final String uuidArg) {
+
+		id = idArg;
+		uuid = uuidArg;
+	}
+
+
 	public Statement(final Node subjectArg, final Predicate predicateArg, final Node objectArg) {
 
+		setSubject(subjectArg);
+		setPredicate(predicateArg);
+		setObject(objectArg);
+	}
+
+	public Statement(final String uuidArg, final Node subjectArg, final Predicate predicateArg, final Node objectArg) {
+
+		setUUID(uuidArg);
 		setSubject(subjectArg);
 		setPredicate(predicateArg);
 		setObject(objectArg);
@@ -53,9 +75,28 @@ public class Statement {
 		setOrder(orderArg);
 	}
 
+	public Statement(final String uuidArg, final Node subjectArg, final Predicate predicateArg, final Node objectArg, final Long orderArg) {
+
+		setUUID(uuidArg);
+		setSubject(subjectArg);
+		setPredicate(predicateArg);
+		setObject(objectArg);
+		setOrder(orderArg);
+	}
+
+
 	public Statement(final long idArg, final Node subjectArg, final Predicate predicateArg, final Node objectArg) {
 
 		id = idArg;
+		setSubject(subjectArg);
+		setPredicate(predicateArg);
+		setObject(objectArg);
+	}
+
+	public Statement(final long idArg, final String uuidArg, final Node subjectArg, final Predicate predicateArg, final Node objectArg) {
+
+		id = idArg;
+		setUUID(uuidArg);
 		setSubject(subjectArg);
 		setPredicate(predicateArg);
 		setObject(objectArg);
@@ -70,6 +111,16 @@ public class Statement {
 		setOrder(orderArg);
 	}
 
+	public Statement(final long idArg, final String uuidArg, final Node subjectArg, final Predicate predicateArg, final Node objectArg, final Long orderArg) {
+
+		id = idArg;
+		setUUID(uuidArg);
+		setSubject(subjectArg);
+		setPredicate(predicateArg);
+		setObject(objectArg);
+		setOrder(orderArg);
+	}
+
 	public Long getId() {
 
 		return id;
@@ -78,6 +129,16 @@ public class Statement {
 	public void setId(final long idArg) {
 
 		id = idArg;
+	}
+
+	public String getUUID() {
+
+		return uuid;
+	}
+
+	public void setUUID(final String uuidArg) {
+
+		uuid = uuidArg;
 	}
 
 	public Node getSubject() {
@@ -135,6 +196,7 @@ public class Statement {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((uuid == null) ? 0 : uuid.hashCode());
 		result = prime * result + ((object == null) ? 0 : object.hashCode());
 		result = prime * result + ((predicate == null) ? 0 : predicate.hashCode());
 		result = prime * result + ((subject == null) ? 0 : subject.hashCode());
@@ -155,6 +217,11 @@ public class Statement {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
+			return false;
+		if (uuid == null) {
+			if (other.uuid != null)
+				return false;
+		} else if (!uuid.equals(other.uuid))
 			return false;
 		if (object == null) {
 			if (other.object != null)
