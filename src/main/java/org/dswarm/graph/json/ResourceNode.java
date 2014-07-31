@@ -10,6 +10,8 @@ public class ResourceNode extends Node {
 
 	private String	uri;
 
+	private String provenance;
+
 	public ResourceNode(final String uriArg) {
 
 		super(NodeType.Resource);
@@ -17,12 +19,28 @@ public class ResourceNode extends Node {
 		uri = uriArg;
 	}
 
-	@JsonCreator
-	public ResourceNode(@JsonProperty("id") final long idArg, @JsonProperty("uri") final String uriArg) {
+	public ResourceNode(final String uriArg, final String provenanceArg) {
+
+		super(NodeType.Resource);
+
+		uri = uriArg;
+		provenance = provenanceArg;
+	}
+
+	public ResourceNode(final long idArg, final String uriArg) {
 
 		super(idArg, NodeType.Resource);
 
 		uri = uriArg;
+	}
+
+	@JsonCreator
+	public ResourceNode(@JsonProperty("id") final long idArg, @JsonProperty("uri") final String uriArg, @JsonProperty("provenance") final String provenanceArg) {
+
+		super(idArg, NodeType.Resource);
+
+		uri = uriArg;
+		provenance = provenanceArg;
 	}
 
 	public String getUri() {
@@ -35,28 +53,41 @@ public class ResourceNode extends Node {
 		uri = uriArg;
 	}
 
+	public String getProvenance() {
+
+		return provenance;
+	}
+
+	public void setProvenance(final String provenanceArg) {
+
+		provenance = provenanceArg;
+	}
+
 	@Override
 	public int hashCode() {
-		final int prime = 31;
+
 		int result = super.hashCode();
-		result = prime * result + ((uri == null) ? 0 : uri.hashCode());
+		result = 31 * result + uri.hashCode();
+		result = 31 * result + (provenance != null ? provenance.hashCode() : 0);
+
 		return result;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(Object o) {
+
+		if (this == o) {
 			return true;
-		if (!super.equals(obj))
+		}
+		if (!(o instanceof ResourceNode)) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (!super.equals(o)) {
 			return false;
-		ResourceNode other = (ResourceNode) obj;
-		if (uri == null) {
-			if (other.uri != null)
-				return false;
-		} else if (!uri.equals(other.uri))
-			return false;
-		return true;
+		}
+
+		ResourceNode that = (ResourceNode) o;
+
+		return !(provenance != null ? !provenance.equals(that.provenance) : that.provenance != null) && uri.equals(that.uri);
 	}
 }
