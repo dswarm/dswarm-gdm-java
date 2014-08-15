@@ -31,6 +31,8 @@ public class Statement {
 	 */
 	private Long		order		= null;
 
+	private String evidence = null;
+
 	public Statement() {
 
 	}
@@ -59,6 +61,14 @@ public class Statement {
 		setObject(objectArg);
 	}
 
+	public Statement(final Node subjectArg, final Predicate predicateArg, final Node objectArg, final String evidenceArg) {
+
+		setSubject(subjectArg);
+		setPredicate(predicateArg);
+		setObject(objectArg);
+		setEvidence(evidenceArg);
+	}
+
 	public Statement(final String uuidArg, final Node subjectArg, final Predicate predicateArg, final Node objectArg) {
 
 		setUUID(uuidArg);
@@ -67,12 +77,30 @@ public class Statement {
 		setObject(objectArg);
 	}
 
+	public Statement(final String uuidArg, final Node subjectArg, final Predicate predicateArg, final Node objectArg, final String evidenceArg) {
+
+		setUUID(uuidArg);
+		setSubject(subjectArg);
+		setPredicate(predicateArg);
+		setObject(objectArg);
+		setEvidence(evidenceArg);
+	}
+
 	public Statement(final Node subjectArg, final Predicate predicateArg, final Node objectArg, final Long orderArg) {
 
 		setSubject(subjectArg);
 		setPredicate(predicateArg);
 		setObject(objectArg);
 		setOrder(orderArg);
+	}
+
+	public Statement(final Node subjectArg, final Predicate predicateArg, final Node objectArg, final Long orderArg, final String evidenceArg) {
+
+		setSubject(subjectArg);
+		setPredicate(predicateArg);
+		setObject(objectArg);
+		setOrder(orderArg);
+		setEvidence(evidenceArg);
 	}
 
 	public Statement(final String uuidArg, final Node subjectArg, final Predicate predicateArg, final Node objectArg, final Long orderArg) {
@@ -84,6 +112,15 @@ public class Statement {
 		setOrder(orderArg);
 	}
 
+	public Statement(final String uuidArg, final Node subjectArg, final Predicate predicateArg, final Node objectArg, final Long orderArg, final String evidenceArg) {
+
+		setUUID(uuidArg);
+		setSubject(subjectArg);
+		setPredicate(predicateArg);
+		setObject(objectArg);
+		setOrder(orderArg);
+		setEvidence(evidenceArg);
+	}
 
 	public Statement(final long idArg, final Node subjectArg, final Predicate predicateArg, final Node objectArg) {
 
@@ -93,13 +130,32 @@ public class Statement {
 		setObject(objectArg);
 	}
 
-	public Statement(final long idArg, final String uuidArg, final Node subjectArg, final Predicate predicateArg, final Node objectArg) {
+	public Statement(final long idArg, final Node subjectArg, final Predicate predicateArg, final Node objectArg, final String evidenceArg) {
+
+		id = idArg;
+		setSubject(subjectArg);
+		setPredicate(predicateArg);
+		setObject(objectArg);
+		setEvidence(evidenceArg);
+	}
+
+		public Statement(final long idArg, final String uuidArg, final Node subjectArg, final Predicate predicateArg, final Node objectArg) {
 
 		id = idArg;
 		setUUID(uuidArg);
 		setSubject(subjectArg);
 		setPredicate(predicateArg);
 		setObject(objectArg);
+	}
+
+	public Statement(final long idArg, final String uuidArg, final Node subjectArg, final Predicate predicateArg, final Node objectArg, final String evidenceArg) {
+
+		id = idArg;
+		setUUID(uuidArg);
+		setSubject(subjectArg);
+		setPredicate(predicateArg);
+		setObject(objectArg);
+		setEvidence(evidenceArg);
 	}
 
 	public Statement(final long idArg, final Node subjectArg, final Predicate predicateArg, final Node objectArg, final Long orderArg) {
@@ -111,6 +167,16 @@ public class Statement {
 		setOrder(orderArg);
 	}
 
+	public Statement(final long idArg, final Node subjectArg, final Predicate predicateArg, final Node objectArg, final Long orderArg, final String evidenceArg) {
+
+		id = idArg;
+		setSubject(subjectArg);
+		setPredicate(predicateArg);
+		setObject(objectArg);
+		setOrder(orderArg);
+		setEvidence(evidenceArg);
+	}
+
 	public Statement(final long idArg, final String uuidArg, final Node subjectArg, final Predicate predicateArg, final Node objectArg, final Long orderArg) {
 
 		id = idArg;
@@ -119,6 +185,17 @@ public class Statement {
 		setPredicate(predicateArg);
 		setObject(objectArg);
 		setOrder(orderArg);
+	}
+
+	public Statement(final long idArg, final String uuidArg, final Node subjectArg, final Predicate predicateArg, final Node objectArg, final Long orderArg, final String evidenceArg) {
+
+		id = idArg;
+		setUUID(uuidArg);
+		setSubject(subjectArg);
+		setPredicate(predicateArg);
+		setObject(objectArg);
+		setOrder(orderArg);
+		setEvidence(evidenceArg);
 	}
 
 	public Long getId() {
@@ -191,58 +268,48 @@ public class Statement {
 		order = orderArg;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((uuid == null) ? 0 : uuid.hashCode());
-		result = prime * result + ((object == null) ? 0 : object.hashCode());
-		result = prime * result + ((predicate == null) ? 0 : predicate.hashCode());
-		result = prime * result + ((subject == null) ? 0 : subject.hashCode());
-		result = prime * result + ((order == null) ? 0 : order.hashCode());
-		return result;
+	public String getEvidence() {
+
+		return evidence;
+	}
+
+	public void setEvidence(final String evidenceArg) {
+
+		evidence = evidenceArg;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(final Object o) {
+		if (this == o) {
 			return true;
-		if (obj == null)
+		}
+		if (o == null || getClass() != o.getClass()) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Statement other = (Statement) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (uuid == null) {
-			if (other.uuid != null)
-				return false;
-		} else if (!uuid.equals(other.uuid))
-			return false;
-		if (object == null) {
-			if (other.object != null)
-				return false;
-		} else if (!object.equals(other.object))
-			return false;
-		if (order == null) {
-			if (other.order != null)
-				return false;
-		} else if (!order.equals(other.order))
-			return false;
-		if (predicate == null) {
-			if (other.predicate != null)
-				return false;
-		} else if (!predicate.equals(other.predicate))
-			return false;
-		if (subject == null) {
-			if (other.subject != null)
-				return false;
-		} else if (!subject.equals(other.subject))
-			return false;
-		return true;
+		}
+
+		final Statement statement = (Statement) o;
+
+		return !(evidence != null ? !evidence.equals(statement.evidence) : statement.evidence != null) && !(id != null ?
+				!id.equals(statement.id) :
+				statement.id != null) && !(object != null ? !object.equals(statement.object) : statement.object != null) && !(order != null ?
+				!order.equals(statement.order) :
+				statement.order != null) && !(predicate != null ? !predicate.equals(statement.predicate) : statement.predicate != null) && !(
+				subject != null ? !subject.equals(statement.subject) : statement.subject != null) && !(uuid != null ?
+				!uuid.equals(statement.uuid) :
+				statement.uuid != null);
+	}
+
+	@Override
+	public int hashCode() {
+
+		int result = id != null ? id.hashCode() : 0;
+		result = 31 * result + (uuid != null ? uuid.hashCode() : 0);
+		result = 31 * result + (subject != null ? subject.hashCode() : 0);
+		result = 31 * result + (predicate != null ? predicate.hashCode() : 0);
+		result = 31 * result + (object != null ? object.hashCode() : 0);
+		result = 31 * result + (order != null ? order.hashCode() : 0);
+		result = 31 * result + (evidence != null ? evidence.hashCode() : 0);
+
+		return result;
 	}
 }

@@ -121,11 +121,25 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 
 			try {
 
-				order = Long.valueOf(orderNode.asLong());
+				order = orderNode.asLong();
 			} catch (final Exception e) {
 
 				order = null;
 			}
+		}
+
+		final JsonNode evidenceNode = node.get("evidence");
+
+		String evidence = null;
+
+		if (evidenceNode != null) {
+
+			evidence = evidenceNode.asText();
+		}
+
+		if (evidence != null) {
+
+			return new Statement(id, uuid, subject, predicate, object, order, evidence);
 		}
 
 		if (id == null && uuid == null && order == null) {
