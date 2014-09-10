@@ -22,10 +22,28 @@ public class StatementTest {
 		final Predicate predicate = new Predicate("http://www.openarchives.org/OAI/2.0/header");
 		final Node object = new Node(2);
 
-		final Statement statement = new Statement(1, subject, predicate, object);
+		final Statement statement = new Statement(subject, predicate, object);
+		statement.setId(1);
 		final String statementJSONString = Util.getJSONObjectMapper().writeValueAsString(statement);
 
 		final String expectedJSONString = TestUtil.getResourceAsString("statement.json");
+
+		Assert.assertEquals("wrong serialisation", expectedJSONString, statementJSONString);
+	}
+
+	@Test
+	public void testSerializeStatementWConfidence() throws IOException {
+
+		final ResourceNode subject = new ResourceNode(1, "http://data.slub-dresden.de/datamodels/22/records/18d68601-0623-42b4-ad89-f8954cc25912");
+		final Predicate predicate = new Predicate("http://www.openarchives.org/OAI/2.0/header");
+		final Node object = new Node(2);
+
+		final Statement statement = new Statement(subject, predicate, object);
+		statement.setId(1);
+		statement.setConfidence("20");
+		final String statementJSONString = Util.getJSONObjectMapper().writeValueAsString(statement);
+
+		final String expectedJSONString = TestUtil.getResourceAsString("statement_w_confidence.json");
 
 		Assert.assertEquals("wrong serialisation", expectedJSONString, statementJSONString);
 	}
@@ -37,7 +55,8 @@ public class StatementTest {
 		final Predicate predicate = new Predicate("http://www.openarchives.org/OAI/2.0/header");
 		final Node object = new ResourceNode(2, "http://example.com/dataresource", "http://example.com");
 
-		final Statement statement = new Statement(1, subject, predicate, object);
+		final Statement statement = new Statement(subject, predicate, object);
+		statement.setId(1);
 		final String statementJSONString = Util.getJSONObjectMapper().writeValueAsString(statement);
 
 		final String expectedJSONString = TestUtil.getResourceAsString("statement_w_provenance_resource.json");
@@ -52,7 +71,9 @@ public class StatementTest {
 		final Predicate predicate = new Predicate("http://www.openarchives.org/OAI/2.0/header");
 		final Node object = new ResourceNode(2, "http://example.com/dataresource", "http://example.com");
 
-		final Statement statement = new Statement(1, subject, predicate, object, "0815");
+		final Statement statement = new Statement(subject, predicate, object);
+		statement.setId(1);
+		statement.setEvidence("0815");
 		final String statementJSONString = Util.getJSONObjectMapper().writeValueAsString(statement);
 
 		final String expectedJSONString = TestUtil.getResourceAsString("statement_w_provenance_resource_and_evidence.json");
@@ -67,7 +88,9 @@ public class StatementTest {
 		final Predicate predicate = new Predicate("http://www.openarchives.org/OAI/2.0/header");
 		final Node object = new Node(2);
 
-		final Statement statement = new Statement(1, "18d68601-0623-42b4-ad89-f8954cc25912", subject, predicate, object);
+		final Statement statement = new Statement(subject, predicate, object);
+		statement.setId(1);
+		statement.setUUID("18d68601-0623-42b4-ad89-f8954cc25912");
 		final String statementJSONString = Util.getJSONObjectMapper().writeValueAsString(statement);
 		final ObjectNode statementJSON = Util.getJSONObjectMapper().readValue(statementJSONString, ObjectNode.class);
 
@@ -84,7 +107,8 @@ public class StatementTest {
 		final Predicate predicate = new Predicate("http://www.openarchives.org/OAI/2.0/header");
 		final Node object = new Node(2);
 
-		final Statement statement = new Statement("18d68601-0623-42b4-ad89-f8954cc25912", subject, predicate, object);
+		final Statement statement = new Statement(subject, predicate, object);
+		statement.setUUID("18d68601-0623-42b4-ad89-f8954cc25912");
 		final String statementJSONString = Util.getJSONObjectMapper().writeValueAsString(statement);
 		final ObjectNode statementJSON = Util.getJSONObjectMapper().readValue(statementJSONString, ObjectNode.class);
 
@@ -103,7 +127,9 @@ public class StatementTest {
 		final long statementId = 1;
 		final long order = 1;
 
-		final Statement statement = new Statement(statementId, subject, predicate, object, order);
+		final Statement statement = new Statement(subject, predicate, object);
+		statement.setId(statementId);
+		statement.setOrder(order);
 		final String statementJSONString = Util.getJSONObjectMapper().writeValueAsString(statement);
 
 		final String expectedJSONString = TestUtil.getResourceAsString("statementworder.json");
@@ -120,7 +146,10 @@ public class StatementTest {
 		final long statementId = 1;
 		final long order = 1;
 
-		final Statement statement = new Statement(statementId, "18d68601-0623-42b4-ad89-f8954cc25912", subject, predicate, object, order);
+		final Statement statement = new Statement(subject, predicate, object);
+		statement.setId(statementId);
+		statement.setUUID("18d68601-0623-42b4-ad89-f8954cc25912");
+		statement.setOrder(order);
 		final String statementJSONString = Util.getJSONObjectMapper().writeValueAsString(statement);
 
 		final String expectedJSONString = TestUtil.getResourceAsString("statementworderanduuid.json");
@@ -136,7 +165,9 @@ public class StatementTest {
 		final Node object = new Node(2);
 		final long order = 1;
 
-		final Statement statement = new Statement("18d68601-0623-42b4-ad89-f8954cc25912", subject, predicate, object, order);
+		final Statement statement = new Statement(subject, predicate, object);
+		statement.setUUID("18d68601-0623-42b4-ad89-f8954cc25912");
+		statement.setOrder(order);
 		final String statementJSONString = Util.getJSONObjectMapper().writeValueAsString(statement);
 
 		final String expectedJSONString = TestUtil.getResourceAsString("statementworderanduuidwithoutid.json");
@@ -157,7 +188,8 @@ public class StatementTest {
 		final Predicate expectedPredicate = new Predicate("http://www.openarchives.org/OAI/2.0/header");
 		final Node expectedObject = new Node(2);
 
-		final Statement expectedStatement = new Statement(1, expectedSubject, expectedPredicate, expectedObject);
+		final Statement expectedStatement = new Statement(expectedSubject, expectedPredicate, expectedObject);
+		expectedStatement.setId(1);
 
 		Assert.assertEquals("ids of the statements should be equal", expectedStatement.getId(), statement.getId());
 		Assert.assertNotNull("subject of the statement shouldn't be null", statement.getSubject());
@@ -176,6 +208,41 @@ public class StatementTest {
 	}
 
 	@Test
+	public void testDeserializeStatementWConfidence() throws IOException {
+
+		final String statementJSONString = TestUtil.getResourceAsString("statement_w_confidence.json");
+		final Statement statement = Util.getJSONObjectMapper().readValue(statementJSONString, Statement.class);
+
+		Assert.assertNotNull("deserialized statement shouldn't be null", statement);
+
+		final ResourceNode expectedSubject = new ResourceNode(1,
+				"http://data.slub-dresden.de/datamodels/22/records/18d68601-0623-42b4-ad89-f8954cc25912");
+		final Predicate expectedPredicate = new Predicate("http://www.openarchives.org/OAI/2.0/header");
+		final Node expectedObject = new Node(2);
+
+		final Statement expectedStatement = new Statement(expectedSubject, expectedPredicate, expectedObject);
+		expectedStatement.setId(1);
+		expectedStatement.setConfidence("20");
+
+		Assert.assertEquals("ids of the statements should be equal", expectedStatement.getId(), statement.getId());
+		Assert.assertNotNull("subject of the statement shouldn't be null", statement.getSubject());
+		Assert.assertEquals("ids of the statements' subjects should be equal", expectedStatement.getSubject().getId(), statement.getSubject().getId());
+		Assert.assertEquals("types of the statements' subjects should be equal", expectedStatement.getSubject().getType(), statement.getSubject()
+				.getType());
+		Assert.assertNotNull("predicate of the statement shouldn't be null", statement.getPredicate());
+		Assert.assertEquals("ids of the statements' predicates should be equal", expectedStatement.getPredicate().getUri(), statement.getPredicate()
+				.getUri());
+		Assert.assertNotNull("object of the statement shouldn't be null", statement.getObject());
+		Assert.assertEquals("ids of the statements' objects should be equal", expectedStatement.getObject().getId(), statement.getObject().getId());
+		Assert.assertEquals("types of the statements' objects should be equal", expectedStatement.getObject().getType(), statement.getObject()
+				.getType());
+		Assert.assertEquals("uris of the statements' subjects should be equal", ((ResourceNode) expectedStatement.getSubject()).getUri(),
+				((ResourceNode) statement.getSubject()).getUri());
+		Assert.assertNotNull("subject of the confidence shouldn't be null", statement.getConfidence());
+		Assert.assertEquals("confidences of the statements should be equal", expectedStatement.getConfidence(), statement.getConfidence());
+	}
+
+	@Test
 	public void testDeserializeStatementWProvenanceResource() throws IOException {
 
 		final String statementJSONString = TestUtil.getResourceAsString("statement_w_provenance_resource.json");
@@ -188,7 +255,8 @@ public class StatementTest {
 		final Predicate expectedPredicate = new Predicate("http://www.openarchives.org/OAI/2.0/header");
 		final Node expectedObject = new ResourceNode(2, "http://example.com/dataresource", "http://example.com");
 
-		final Statement expectedStatement = new Statement(1, expectedSubject, expectedPredicate, expectedObject);
+		final Statement expectedStatement = new Statement(expectedSubject, expectedPredicate, expectedObject);
+		expectedStatement.setId(1);
 
 		Assert.assertEquals("ids of the statements should be equal", expectedStatement.getId(), statement.getId());
 		Assert.assertNotNull("subject of the statement shouldn't be null", statement.getSubject());
@@ -221,7 +289,9 @@ public class StatementTest {
 		final Predicate expectedPredicate = new Predicate("http://www.openarchives.org/OAI/2.0/header");
 		final Node expectedObject = new ResourceNode(2, "http://example.com/dataresource", "http://example.com");
 
-		final Statement expectedStatement = new Statement(1, expectedSubject, expectedPredicate, expectedObject, "0815");
+		final Statement expectedStatement = new Statement(expectedSubject, expectedPredicate, expectedObject);
+		expectedStatement.setId(1);
+		expectedStatement.setEvidence("0815");
 
 		Assert.assertEquals("ids of the statements should be equal", expectedStatement.getId(), statement.getId());
 		Assert.assertNotNull("subject of the statement shouldn't be null", statement.getSubject());
@@ -256,8 +326,10 @@ public class StatementTest {
 		final Predicate expectedPredicate = new Predicate("http://www.openarchives.org/OAI/2.0/header");
 		final Node expectedObject = new Node(2);
 
-		final Statement expectedStatement = new Statement(1, "18d68601-0623-42b4-ad89-f8954cc25912", expectedSubject, expectedPredicate,
+		final Statement expectedStatement = new Statement(expectedSubject, expectedPredicate,
 				expectedObject);
+		expectedStatement.setId(1);
+		expectedStatement.setUUID("18d68601-0623-42b4-ad89-f8954cc25912");
 
 		Assert.assertEquals("ids of the statements should be equal", expectedStatement.getId(), statement.getId());
 		Assert.assertNotNull("uuid of the statement shouldn't be null", statement.getUUID());
@@ -290,7 +362,8 @@ public class StatementTest {
 		final Predicate expectedPredicate = new Predicate("http://www.openarchives.org/OAI/2.0/header");
 		final Node expectedObject = new Node(2);
 
-		final Statement expectedStatement = new Statement("18d68601-0623-42b4-ad89-f8954cc25912", expectedSubject, expectedPredicate, expectedObject);
+		final Statement expectedStatement = new Statement(expectedSubject, expectedPredicate, expectedObject);
+		expectedStatement.setUUID("18d68601-0623-42b4-ad89-f8954cc25912");
 
 		Assert.assertNull("id of the statement should be null", statement.getId());
 		Assert.assertEquals("ids of the statements should be equal", expectedStatement.getId(), statement.getId());
@@ -326,7 +399,9 @@ public class StatementTest {
 		final long statementId = 1;
 		final long order = 1;
 
-		final Statement expectedStatement = new Statement(statementId, expectedSubject, expectedPredicate, expectedObject, order);
+		final Statement expectedStatement = new Statement(expectedSubject, expectedPredicate, expectedObject);
+		expectedStatement.setId(statementId);
+		expectedStatement.setOrder(order);
 
 		Assert.assertEquals("ids of the statements should be equal", expectedStatement.getId(), statement.getId());
 		Assert.assertNotNull("subject of the statement shouldn't be null", statement.getSubject());
@@ -362,7 +437,10 @@ public class StatementTest {
 		final long order = 1;
 		final String uuid = "18d68601-0623-42b4-ad89-f8954cc25912";
 
-		final Statement expectedStatement = new Statement(statementId, uuid, expectedSubject, expectedPredicate, expectedObject, order);
+		final Statement expectedStatement = new Statement(expectedSubject, expectedPredicate, expectedObject);
+		expectedStatement.setId(statementId);
+		expectedStatement.setUUID(uuid);
+		expectedStatement.setOrder(order);
 
 		Assert.assertEquals("ids of the statements should be equal", expectedStatement.getId(), statement.getId());
 		Assert.assertNotNull("uuid of the statement shouldn't be null", statement.getUUID());
@@ -399,7 +477,9 @@ public class StatementTest {
 		final long order = 1;
 		final String uuid = "18d68601-0623-42b4-ad89-f8954cc25912";
 
-		final Statement expectedStatement = new Statement(uuid, expectedSubject, expectedPredicate, expectedObject, order);
+		final Statement expectedStatement = new Statement(expectedSubject, expectedPredicate, expectedObject);
+		expectedStatement.setUUID(uuid);
+		expectedStatement.setOrder(order);
 
 		Assert.assertNull("id of the statement should be null", statement.getId());
 		Assert.assertEquals("ids of the statements should be equal", expectedStatement.getId(), statement.getId());
