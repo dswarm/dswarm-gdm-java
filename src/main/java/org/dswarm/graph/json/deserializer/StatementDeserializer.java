@@ -22,7 +22,7 @@ import org.dswarm.graph.json.Statement;
 public class StatementDeserializer extends JsonDeserializer<Statement> {
 
 	@Override
-	public Statement deserialize(final JsonParser jp, final DeserializationContext ctxt) throws IOException, JsonProcessingException {
+	public Statement deserialize(final JsonParser jp, final DeserializationContext ctxt) throws IOException {
 
 		final ObjectCodec oc = jp.getCodec();
 
@@ -46,7 +46,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 
 			try {
 
-				id = Long.valueOf(idNode.asLong());
+				id = idNode.asLong();
 			} catch (final Exception e) {
 
 				id = null;

@@ -49,7 +49,7 @@ public class StatementTest {
 	}
 
 	@Test
-	public void testSerializeStatementWProvenanceResource() throws IOException {
+	public void testSerializeStatementWDataModelResource() throws IOException {
 
 		final ResourceNode subject = new ResourceNode(1, "http://data.slub-dresden.de/datamodels/22/records/18d68601-0623-42b4-ad89-f8954cc25912");
 		final Predicate predicate = new Predicate("http://www.openarchives.org/OAI/2.0/header");
@@ -59,13 +59,13 @@ public class StatementTest {
 		statement.setId(1);
 		final String statementJSONString = Util.getJSONObjectMapper().writeValueAsString(statement);
 
-		final String expectedJSONString = TestUtil.getResourceAsString("statement_w_provenance_resource.json");
+		final String expectedJSONString = TestUtil.getResourceAsString("statement_w_data_model_resource.json");
 
 		Assert.assertEquals("wrong serialisation", expectedJSONString, statementJSONString);
 	}
 
 	@Test
-	public void testSerializeStatementWProvenanceResourceAndEvidence() throws IOException {
+	public void testSerializeStatementWDataModelResourceAndEvidence() throws IOException {
 
 		final ResourceNode subject = new ResourceNode(1, "http://data.slub-dresden.de/datamodels/22/records/18d68601-0623-42b4-ad89-f8954cc25912");
 		final Predicate predicate = new Predicate("http://www.openarchives.org/OAI/2.0/header");
@@ -76,7 +76,7 @@ public class StatementTest {
 		statement.setEvidence("0815");
 		final String statementJSONString = Util.getJSONObjectMapper().writeValueAsString(statement);
 
-		final String expectedJSONString = TestUtil.getResourceAsString("statement_w_provenance_resource_and_evidence.json");
+		final String expectedJSONString = TestUtil.getResourceAsString("statement_w_data_model_resource_and_evidence.json");
 
 		Assert.assertEquals("wrong serialisation", expectedJSONString, statementJSONString);
 	}
@@ -243,9 +243,9 @@ public class StatementTest {
 	}
 
 	@Test
-	public void testDeserializeStatementWProvenanceResource() throws IOException {
+	public void testDeserializeStatementWDataModelResource() throws IOException {
 
-		final String statementJSONString = TestUtil.getResourceAsString("statement_w_provenance_resource.json");
+		final String statementJSONString = TestUtil.getResourceAsString("statement_w_data_model_resource.json");
 		final Statement statement = Util.getJSONObjectMapper().readValue(statementJSONString, Statement.class);
 
 		Assert.assertNotNull("deserialized statement shouldn't be null", statement);
@@ -270,16 +270,16 @@ public class StatementTest {
 		Assert.assertEquals("ids of the statements' objects should be equal", expectedStatement.getObject().getId(), statement.getObject().getId());
 		Assert.assertEquals("types of the statements' objects should be equal", expectedStatement.getObject().getType(), statement.getObject()
 				.getType());
-		Assert.assertNotNull(((ResourceNode) expectedStatement.getObject()).getProvenance());
-		Assert.assertEquals("provenances of the statements' objects should be equal", ((ResourceNode) expectedStatement.getObject()).getProvenance(), ((ResourceNode) statement.getObject()).getProvenance());
+		Assert.assertNotNull(((ResourceNode) expectedStatement.getObject()).getDataModel());
+		Assert.assertEquals("data models of the statements' objects should be equal", ((ResourceNode) expectedStatement.getObject()).getDataModel(), ((ResourceNode) statement.getObject()).getDataModel());
 		Assert.assertEquals("uris of the statements' subjects should be equal", ((ResourceNode) expectedStatement.getSubject()).getUri(),
 				((ResourceNode) statement.getSubject()).getUri());
 	}
 
 	@Test
-	public void testDeserializeStatementWProvenanceResourceAndEvidence() throws IOException {
+	public void testDeserializeStatementWDataModelResourceAndEvidence() throws IOException {
 
-		final String statementJSONString = TestUtil.getResourceAsString("statement_w_provenance_resource_and_evidence.json");
+		final String statementJSONString = TestUtil.getResourceAsString("statement_w_data_model_resource_and_evidence.json");
 		final Statement statement = Util.getJSONObjectMapper().readValue(statementJSONString, Statement.class);
 
 		Assert.assertNotNull("deserialized statement shouldn't be null", statement);
@@ -305,8 +305,8 @@ public class StatementTest {
 		Assert.assertEquals("ids of the statements' objects should be equal", expectedStatement.getObject().getId(), statement.getObject().getId());
 		Assert.assertEquals("types of the statements' objects should be equal", expectedStatement.getObject().getType(), statement.getObject()
 				.getType());
-		Assert.assertNotNull(((ResourceNode) expectedStatement.getObject()).getProvenance());
-		Assert.assertEquals("provenances of the statements' objects should be equal", ((ResourceNode) expectedStatement.getObject()).getProvenance(), ((ResourceNode) statement.getObject()).getProvenance());
+		Assert.assertNotNull(((ResourceNode) expectedStatement.getObject()).getDataModel());
+		Assert.assertEquals("data models of the statements' objects should be equal", ((ResourceNode) expectedStatement.getObject()).getDataModel(), ((ResourceNode) statement.getObject()).getDataModel());
 		Assert.assertEquals("uris of the statements' subjects should be equal", ((ResourceNode) expectedStatement.getSubject()).getUri(),
 				((ResourceNode) statement.getSubject()).getUri());
 		Assert.assertNotNull("evidence of the statement shouldn't be null", statement.getEvidence());

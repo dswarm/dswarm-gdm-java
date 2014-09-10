@@ -10,7 +10,8 @@ public class ResourceNode extends Node {
 
 	private String	uri;
 
-	private String provenance;
+	@JsonProperty("data_model")
+	private String dataModel;
 
 	public ResourceNode(final String uriArg) {
 
@@ -19,12 +20,12 @@ public class ResourceNode extends Node {
 		uri = uriArg;
 	}
 
-	public ResourceNode(final String uriArg, final String provenanceArg) {
+	public ResourceNode(final String uriArg, final String dataModelArg) {
 
 		super(NodeType.Resource);
 
 		uri = uriArg;
-		provenance = provenanceArg;
+		dataModel = dataModelArg;
 	}
 
 	public ResourceNode(final long idArg, final String uriArg) {
@@ -35,12 +36,12 @@ public class ResourceNode extends Node {
 	}
 
 	@JsonCreator
-	public ResourceNode(@JsonProperty("id") final long idArg, @JsonProperty("uri") final String uriArg, @JsonProperty("provenance") final String provenanceArg) {
+	public ResourceNode(@JsonProperty("id") final long idArg, @JsonProperty("uri") final String uriArg, @JsonProperty("data_model") final String dataModelArg) {
 
 		super(idArg, NodeType.Resource);
 
 		uri = uriArg;
-		provenance = provenanceArg;
+		dataModel = dataModelArg;
 	}
 
 	public String getUri() {
@@ -53,14 +54,14 @@ public class ResourceNode extends Node {
 		uri = uriArg;
 	}
 
-	public String getProvenance() {
+	public String getDataModel() {
 
-		return provenance;
+		return dataModel;
 	}
 
-	public void setProvenance(final String provenanceArg) {
+	public void setDataModel(final String dataModelArg) {
 
-		provenance = provenanceArg;
+		dataModel = dataModelArg;
 	}
 
 	@Override
@@ -68,13 +69,13 @@ public class ResourceNode extends Node {
 
 		int result = super.hashCode();
 		result = 31 * result + uri.hashCode();
-		result = 31 * result + (provenance != null ? provenance.hashCode() : 0);
+		result = 31 * result + (dataModel != null ? dataModel.hashCode() : 0);
 
 		return result;
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 
 		if (this == o) {
 			return true;
@@ -86,8 +87,8 @@ public class ResourceNode extends Node {
 			return false;
 		}
 
-		ResourceNode that = (ResourceNode) o;
+		final ResourceNode that = (ResourceNode) o;
 
-		return !(provenance != null ? !provenance.equals(that.provenance) : that.provenance != null) && uri.equals(that.uri);
+		return !(dataModel != null ? !dataModel.equals(that.dataModel) : that.dataModel != null) && uri.equals(that.uri);
 	}
 }

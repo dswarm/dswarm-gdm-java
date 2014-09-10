@@ -22,9 +22,9 @@
 		<maven-clean-plugin.version>2.5</maven-clean-plugin.version>
 		<maven-release-plugin.version>2.4.2</maven-release-plugin.version>
 		<!-- note this might deliver conflicts -->
-		<jackson.version>2.3.1</jackson.version>
+		<jackson.version>2.4.2</jackson.version>
 		<junit.version>4.11</junit.version>
-		<google.guava.version>14.0.1</google.guava.version>
+		<google.guava.version>18.0</google.guava.version>
 	</properties>
 
 	<build>
