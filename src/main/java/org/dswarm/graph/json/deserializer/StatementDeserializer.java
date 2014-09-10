@@ -137,9 +137,9 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 			evidence = evidenceNode.asText();
 		}
 
-		if (evidence != null) {
+		if (id == null && uuid == null && order == null && evidence != null) {
 
-			return new Statement(id, uuid, subject, predicate, object, order, evidence);
+			return new Statement( subject, predicate, object, evidence);
 		}
 
 		if (id == null && uuid == null && order == null) {
@@ -147,9 +147,19 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 			return new Statement(subject, predicate, object);
 		}
 
+		if (id == null && uuid != null && order == null && evidence != null) {
+
+			return new Statement(uuid, subject, predicate, object, evidence);
+		}
+
 		if (id == null && uuid != null && order == null) {
 
 			return new Statement(uuid, subject, predicate, object);
+		}
+
+		if (id == null && uuid != null && order != null && evidence != null) {
+
+			return new Statement(uuid, subject, predicate, object, order, evidence);
 		}
 
 		if (id == null && uuid != null && order != null) {
@@ -157,9 +167,19 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 			return new Statement(uuid, subject, predicate, object, order);
 		}
 
+		if (id == null && uuid == null && order != null && evidence != null) {
+
+			return new Statement(subject, predicate, object, order, evidence);
+		}
+
 		if (id == null && uuid == null && order != null) {
 
 			return new Statement(subject, predicate, object, order);
+		}
+
+		if (id != null && uuid != null && order == null && evidence != null) {
+
+			return new Statement(id, uuid, subject, predicate, object, evidence);
 		}
 
 		if (id != null && uuid != null && order == null) {
@@ -167,14 +187,29 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 			return new Statement(id, uuid, subject, predicate, object);
 		}
 
+		if (id != null && uuid == null && order == null && evidence != null) {
+
+			return new Statement(id, subject, predicate, object, evidence);
+		}
+
 		if (id != null && uuid == null && order == null) {
 
 			return new Statement(id, subject, predicate, object);
 		}
 
+		if (id != null && uuid == null && order != null && evidence != null) {
+
+			return new Statement(id, subject, predicate, object, order, evidence);
+		}
+
 		if (id != null && uuid == null && order != null) {
 
 			return new Statement(id, subject, predicate, object, order);
+		}
+
+		if(evidence != null) {
+
+			return new Statement(id, uuid, subject, predicate, object, order, evidence);
 		}
 
 		return new Statement(id, uuid, subject, predicate, object, order);
