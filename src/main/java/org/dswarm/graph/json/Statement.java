@@ -245,4 +245,8 @@ public class Statement {
 			return false;
 		return true;
 	}
+	
+	public String toString(){
+		return "("+ subject + "," + predicate + "," + object + ") Order: " + getOrder(); 
+	}
 }

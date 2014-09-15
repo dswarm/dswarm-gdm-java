@@ -162,4 +162,20 @@ public class Resource {
 			return false;
 		return true;
 	}
+	
+	public String toString(){
+		return getUri() + ":Resource"; 
+	}
+	
+	public String toLongString(){
+		
+		String s = "";
+		s += getUri() + ":Resource";
+		
+		for (Statement statement : getStatements()) {
+			s += statement;
+		}
+		
+		return s;
+	}
 }

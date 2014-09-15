@@ -60,4 +60,8 @@ public class LiteralNode extends Node {
 			return false;
 		return true;
 	}
+	
+	public String toString(){
+		return getValue() + ":LiteralNode"; 
+	}
 }
