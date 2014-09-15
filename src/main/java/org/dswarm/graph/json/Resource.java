@@ -57,7 +57,8 @@ public class Resource {
 
 	public Resource addStatement(final long id, final Node subject, final Predicate predicate, final Node object) {
 
-		final Statement statement = new Statement(id, subject, predicate, object);
+		final Statement statement = new Statement(subject, predicate, object);
+		statement.setId(id);
 
 		statements.add(statement);
 
@@ -66,7 +67,13 @@ public class Resource {
 
 	public Resource addStatement(final long id, final String uuid, final Node subject, final Predicate predicate, final Node object) {
 
-		final Statement statement = new Statement(id, uuid, subject, predicate, object);
+		final Statement statement = new Statement(subject, predicate, object);
+		statement.setId(id);
+
+		if (uuid != null) {
+
+			statement.setUUID(uuid);
+		}
 
 		statements.add(statement);
 
@@ -75,7 +82,13 @@ public class Resource {
 
 	public Resource addStatement(final long id, final Node subject, final Predicate predicate, final Node object, final Long order) {
 
-		final Statement statement = new Statement(id, subject, predicate, object, order);
+		final Statement statement = new Statement(subject, predicate, object);
+		statement.setId(id);
+
+		if (order != null) {
+
+			statement.setOrder(order);
+		}
 
 		statements.add(statement);
 
@@ -84,7 +97,18 @@ public class Resource {
 
 	public Resource addStatement(final long id, final String uuid, final Node subject, final Predicate predicate, final Node object, final Long order) {
 
-		final Statement statement = new Statement(id, uuid, subject, predicate, object, order);
+		final Statement statement = new Statement(subject, predicate, object);
+		statement.setId(id);
+
+		if (uuid != null) {
+
+			statement.setUUID(uuid);
+		}
+
+		if (order != null) {
+
+			statement.setOrder(order);
+		}
 
 		statements.add(statement);
 
@@ -102,7 +126,12 @@ public class Resource {
 
 	public Resource addStatement(final String uuid, final Node subject, final Predicate predicate, final Node object) {
 
-		final Statement statement = new Statement(uuid, subject, predicate, object);
+		final Statement statement = new Statement(subject, predicate, object);
+
+		if (uuid != null) {
+
+			statement.setUUID(uuid);
+		}
 
 		statements.add(statement);
 
@@ -111,7 +140,12 @@ public class Resource {
 
 	public Resource addStatement(final Node subject, final Predicate predicate, final Node object, final Long order) {
 
-		final Statement statement = new Statement(subject, predicate, object, order);
+		final Statement statement = new Statement(subject, predicate, object);
+
+		if (order != null) {
+
+			statement.setOrder(order);
+		}
 
 		statements.add(statement);
 
@@ -120,7 +154,17 @@ public class Resource {
 
 	public Resource addStatement(final String uuid, final Node subject, final Predicate predicate, final Node object, final Long order) {
 
-		final Statement statement = new Statement(uuid, subject, predicate, object, order);
+		final Statement statement = new Statement(subject, predicate, object);
+
+		if (uuid != null) {
+
+			statement.setUUID(uuid);
+		}
+
+		if (order != null) {
+
+			statement.setOrder(order);
+		}
 
 		statements.add(statement);
 

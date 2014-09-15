@@ -16,6 +16,9 @@ public class ResourceNode extends Node {
 	 */
 	private Resource resource;
 
+	@JsonProperty("data_model")
+	private String dataModel;
+
 	public ResourceNode(final String uriArg) {
 
 		super(NodeType.Resource);
@@ -23,8 +26,15 @@ public class ResourceNode extends Node {
 		uri = uriArg;
 	}
 
-	@JsonCreator
-	public ResourceNode(@JsonProperty("id") final long idArg, @JsonProperty("uri") final String uriArg) {
+	public ResourceNode(final String uriArg, final String dataModelArg) {
+
+		super(NodeType.Resource);
+
+		uri = uriArg;
+		dataModel = dataModelArg;
+	}
+
+	public ResourceNode(final long idArg, final String uriArg) {
 
 		super(idArg, NodeType.Resource);
 
@@ -38,6 +48,16 @@ public class ResourceNode extends Node {
 		this.resource = resource;
 		
 		this.uri = resource.getUri();
+		
+	}
+	
+	@JsonCreator
+	public ResourceNode(@JsonProperty("id") final long idArg, @JsonProperty("uri") final String uriArg, @JsonProperty("data_model") final String dataModelArg) {
+
+		super(idArg, NodeType.Resource);
+
+		uri = uriArg;
+		dataModel = dataModelArg;
 	}
 
 	public String getUri() {
@@ -50,29 +70,42 @@ public class ResourceNode extends Node {
 		uri = uriArg;
 	}
 
+	public String getDataModel() {
+
+		return dataModel;
+	}
+
+	public void setDataModel(final String dataModelArg) {
+
+		dataModel = dataModelArg;
+	}
+
 	@Override
 	public int hashCode() {
-		final int prime = 31;
+
 		int result = super.hashCode();
-		result = prime * result + ((uri == null) ? 0 : uri.hashCode());
+		result = 31 * result + uri.hashCode();
+		result = 31 * result + (dataModel != null ? dataModel.hashCode() : 0);
+
 		return result;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(final Object o) {
+
+		if (this == o) {
 			return true;
-		if (!super.equals(obj))
+		}
+		if (!(o instanceof ResourceNode)) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (!super.equals(o)) {
 			return false;
-		ResourceNode other = (ResourceNode) obj;
-		if (uri == null) {
-			if (other.uri != null)
-				return false;
-		} else if (!uri.equals(other.uri))
-			return false;
-		return true;
+		}
+
+		final ResourceNode that = (ResourceNode) o;
+
+		return !(dataModel != null ? !dataModel.equals(that.dataModel) : that.dataModel != null) && uri.equals(that.uri);
 	}
 	
 	public String toString(){
