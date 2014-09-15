@@ -22,7 +22,7 @@ import org.dswarm.graph.json.Statement;
 public class StatementDeserializer extends JsonDeserializer<Statement> {
 
 	@Override
-	public Statement deserialize(final JsonParser jp, final DeserializationContext ctxt) throws IOException, JsonProcessingException {
+	public Statement deserialize(final JsonParser jp, final DeserializationContext ctxt) throws IOException {
 
 		final ObjectCodec oc = jp.getCodec();
 
@@ -46,7 +46,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 
 			try {
 
-				id = Long.valueOf(idNode.asLong());
+				id = idNode.asLong();
 			} catch (final Exception e) {
 
 				id = null;
@@ -121,48 +121,58 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 
 			try {
 
-				order = Long.valueOf(orderNode.asLong());
+				order = orderNode.asLong();
 			} catch (final Exception e) {
 
 				order = null;
 			}
 		}
 
-		if (id == null && uuid == null && order == null) {
+		final JsonNode evidenceNode = node.get("evidence");
 
-			return new Statement(subject, predicate, object);
+		String evidence = null;
+
+		if (evidenceNode != null) {
+
+			evidence = evidenceNode.asText();
 		}
 
-		if (id == null && uuid != null && order == null) {
+		final JsonNode confidenceNode = node.get("confidence");
 
-			return new Statement(uuid, subject, predicate, object);
+		String confidence = null;
+
+		if (confidenceNode != null) {
+
+			confidence = confidenceNode.asText();
 		}
 
-		if (id == null && uuid != null && order != null) {
+		final Statement statement = new Statement(subject, predicate, object);
 
-			return new Statement(uuid, subject, predicate, object, order);
+		if(id != null) {
+
+			statement.setId(id);
 		}
 
-		if (id == null && uuid == null && order != null) {
+		if(uuid != null) {
 
-			return new Statement(subject, predicate, object, order);
+			statement.setUUID(uuid);
 		}
 
-		if (id != null && uuid != null && order == null) {
+		if(order != null) {
 
-			return new Statement(id, uuid, subject, predicate, object);
+			statement.setOrder(order);
 		}
 
-		if (id != null && uuid == null && order == null) {
+		if(evidence != null) {
 
-			return new Statement(id, subject, predicate, object);
+			statement.setEvidence(evidence);
 		}
 
-		if (id != null && uuid == null && order != null) {
+		if(confidence != null) {
 
-			return new Statement(id, subject, predicate, object, order);
+			statement.setConfidence(confidence);
 		}
 
-		return new Statement(id, uuid, subject, predicate, object, order);
+		return statement;
 	}
 }
