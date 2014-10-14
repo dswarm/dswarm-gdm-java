@@ -20,10 +20,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author tgaengler
+ * @author polowins
  */
 public class ResourceNode extends Node {
 
 	private String	uri;
+	
+	/**
+	 * A resource is only set if this resourceNode is used as a subject in a CBD.
+	 */
+	private Resource resource;
 
 	@JsonProperty("data_model")
 	private String dataModel;
@@ -50,6 +56,16 @@ public class ResourceNode extends Node {
 		uri = uriArg;
 	}
 
+	public ResourceNode(Resource resource) {
+		
+		super(NodeType.Resource);
+		
+		this.resource = resource;
+		
+		this.uri = resource.getUri();
+		
+	}
+	
 	@JsonCreator
 	public ResourceNode(@JsonProperty("id") final long idArg, @JsonProperty("uri") final String uriArg, @JsonProperty("data_model") final String dataModelArg) {
 
@@ -106,4 +122,28 @@ public class ResourceNode extends Node {
 
 		return !(dataModel != null ? !dataModel.equals(that.dataModel) : that.dataModel != null) && uri.equals(that.uri);
 	}
+	
+	public String toString(){
+		return getUri() + ":ResourceNode"; 
+	}
+	
+	/**
+	 * Get the Resource if this resource node is used in statements of a resource (CBD). 
+	 * While (in RDF) every statement has a (rdfs:)Resource as it's subject, we only provide a Resource, if
+	 * the subject is an entity corresponding to an (rdfs:)Resource with a URI, i.e. blank nodes used as 
+	 * a subject do not start a CBD.
+	 * 
+	 * @return the resource or null if this node is not subject in a resource statement
+	 */
+	public Resource getResource(){
+		return this.resource;
+	}
+
+	
+//	/**
+//	 * @param resource - the resource in which this node is used as a subject
+//	 */
+//	public void setResource(Resource resource) {
+//		this.resource = resource;
+//	}
 }
