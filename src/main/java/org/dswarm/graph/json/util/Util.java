@@ -37,8 +37,8 @@ public class Util {
 	private static final ObjectMapper		MAPPER;
 
 	static {
-		MAPPER = new ObjectMapper();
-		MAPPER.setSerializationInclusion(Include.NON_NULL);
+		final ObjectMapper objectMapper = new ObjectMapper();
+		MAPPER = objectMapper.setSerializationInclusion(Include.NON_NULL);
 
 				// enable this, if it will be required again
 				//.setSerializationInclusion(Include.NON_EMPTY);

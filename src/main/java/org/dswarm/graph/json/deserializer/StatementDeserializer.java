@@ -24,6 +24,7 @@ import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.JsonNodeType;
 
 import org.dswarm.graph.json.LiteralNode;
 import org.dswarm.graph.json.Node;
@@ -72,7 +73,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 
 		String uuid = null;
 
-		if (uuidNode != null) {
+		if (uuidNode != null && JsonNodeType.NULL != uuidNode.getNodeType()) {
 
 			uuid = uuidNode.asText();
 		}
