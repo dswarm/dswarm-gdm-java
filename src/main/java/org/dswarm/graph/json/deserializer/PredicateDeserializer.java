@@ -17,17 +17,16 @@ package org.dswarm.graph.json.deserializer;
 
 import java.io.IOException;
 
+import org.dswarm.graph.json.Predicate;
+
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-
-import org.dswarm.graph.json.Predicate;
 
 public class PredicateDeserializer extends JsonDeserializer<Predicate> {
 
 	@Override
-	public Predicate deserialize(final JsonParser jp, final DeserializationContext ctxt) throws IOException, JsonProcessingException {
+	public Predicate deserialize(final JsonParser jp, final DeserializationContext ctxt) throws IOException {
 
 		final String predicateUri = jp.getValueAsString();
 

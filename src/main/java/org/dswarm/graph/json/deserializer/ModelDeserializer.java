@@ -17,17 +17,16 @@ package org.dswarm.graph.json.deserializer;
 
 import java.io.IOException;
 
+import org.dswarm.graph.json.Model;
+import org.dswarm.graph.json.Resource;
+
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-
-import org.dswarm.graph.json.Model;
-import org.dswarm.graph.json.Resource;
 
 /**
  * @author tgaengler
@@ -35,7 +34,7 @@ import org.dswarm.graph.json.Resource;
 public class ModelDeserializer extends JsonDeserializer<Model> {
 
 	@Override
-	public Model deserialize(final JsonParser jp, final DeserializationContext ctxt) throws IOException, JsonProcessingException {
+	public Model deserialize(final JsonParser jp, final DeserializationContext ctxt) throws IOException {
 
 		final ObjectCodec oc = jp.getCodec();
 

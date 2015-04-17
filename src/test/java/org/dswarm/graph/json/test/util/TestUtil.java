@@ -16,9 +16,11 @@
 package org.dswarm.graph.json.test.util;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 
 import com.google.common.base.Charsets;
+import com.google.common.io.ByteSource;
 import com.google.common.io.Resources;
 
 
@@ -35,5 +37,13 @@ public class TestUtil {
 
 		final URL url = Resources.getResource(resource);
 		return Resources.toString(url, Charsets.UTF_8);
+	}
+
+	public static InputStream getResourceAsInputStream(final String resource) throws IOException {
+
+		final URL url = Resources.getResource(resource);
+		final ByteSource byteSource = Resources.asByteSource(url);
+
+		return byteSource.openBufferedStream();
 	}
 }

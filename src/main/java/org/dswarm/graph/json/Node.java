@@ -32,13 +32,13 @@ public class Node {
 	@JsonCreator
 	public Node(@JsonProperty("id") final long idArg) {
 
-		id = Long.valueOf(idArg);
+		id = idArg;
 		type = NodeType.BNode;
 	}
 
 	public Node(final long idArg, final NodeType typeArg) {
 
-		id = Long.valueOf(idArg);
+		id = idArg;
 		type = typeArg;
 	}
 
@@ -54,7 +54,7 @@ public class Node {
 
 	public void setId(final long idArg) {
 
-		id = Long.valueOf(idArg);
+		id = idArg;
 	}
 
 	public NodeType getType() {
