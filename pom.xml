@@ -46,6 +46,10 @@
 		<rxjava.version>1.0.9</rxjava.version>
 	</properties>
 
+	<prerequisites>
+		<maven>2.2.1</maven>
+	</prerequisites>
+
 	<build>
 		<plugins>
 			<plugin>
