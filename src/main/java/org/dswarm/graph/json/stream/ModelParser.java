@@ -168,7 +168,6 @@ public class ModelParser {
 		}
 
 		return resource;
-
 	}
 
 	private Statement parseStatement(final JsonParser jp) throws IOException {
@@ -400,6 +399,7 @@ public class ModelParser {
 			}
 		} else if (resourceURI == null) {
 
+			// literal
 			final String literalValue = getValue(jp, objectNextField);
 
 			if (jp.nextToken() == JsonToken.END_OBJECT) {

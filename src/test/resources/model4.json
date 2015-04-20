@@ -1,0 +1,33 @@
+[
+  {
+    "http://data.slub-dresden.de/datamodels/22/records/18d68601-0623-42b4-ad89-f8954cc25912": [
+      {
+        "id": 1,
+        "s": {
+          "id": 1,
+          "uri": "http://data.slub-dresden.de/datamodels/22/records/18d68601-0623-42b4-ad89-f8954cc25912"
+        },
+        "p": "http://www.openarchives.org/OAI/2.0/header",
+        "o": {"id": 2}
+      },{
+        "id": 2,
+        "s": {
+          "id": 1,
+          "uri": "http://data.slub-dresden.de/datamodels/22/records/18d68601-0623-42b4-ad89-f8954cc25912"
+        },
+        "p": "http://www.openarchives.org/OAI/2.0/header222222",
+        "o": {"id": 3}
+      },{
+        "id": 3,
+        "s": {"id": 3},
+        "p": "http://www.openarchives.org/OAI/2.0/header333333",
+        "o": {"id": 4}
+      },{
+        "id": 4,
+        "s": {"id": 4},
+        "p": "http://www.openarchives.org/OAI/2.0/header444444",
+        "o": {"v": "A VALUE LITERAL"}
+      }
+    ]
+  }
+]
