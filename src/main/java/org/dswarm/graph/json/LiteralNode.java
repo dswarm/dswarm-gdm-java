@@ -34,7 +34,7 @@ public class LiteralNode extends Node {
 	}
 
 	@JsonCreator
-	public LiteralNode(@JsonProperty("id") final long idArg, @JsonProperty("v") final String valueArg) {
+	public LiteralNode(@JsonProperty("id") final Long idArg, @JsonProperty("v") final String valueArg) {
 
 		super(idArg, NodeType.Literal);
 

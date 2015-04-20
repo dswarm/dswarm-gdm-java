@@ -16,6 +16,8 @@
 package org.dswarm.graph.json.stream.test;
 
 import java.io.InputStream;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.dswarm.graph.json.LiteralNode;
@@ -27,6 +29,7 @@ import org.dswarm.graph.json.ResourceNode;
 import org.dswarm.graph.json.Statement;
 import org.dswarm.graph.json.stream.ModelParser;
 import org.dswarm.graph.json.test.util.TestUtil;
+import org.dswarm.graph.json.util.Util;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -559,5 +562,63 @@ public class ModelParserTest {
 
 			i++;
 		}
+	}
+
+	@Test
+	public void testParse6() throws Exception {
+
+		final InputStream inputStream = TestUtil.getResourceAsInputStream("test-mabxml2.gson");
+
+		final ModelParser modelParser = new ModelParser(inputStream);
+
+		final Observable<Resource> resourceObservable = modelParser.parse();
+
+		final Iterable<Resource> iterable = resourceObservable.toBlocking().toIterable();
+
+		final Set<Resource> actualResources = new LinkedHashSet<>();
+
+		for (final Resource resource : iterable) {
+
+			actualResources.add(resource);
+		}
+
+		Assert.assertFalse(actualResources.isEmpty());
+
+		final String expectedJSONString = TestUtil.getResourceAsString("test-mabxml2.gson");
+		final Model expectedModel = Util.getJSONObjectMapper().readValue(expectedJSONString, Model.class);
+
+		Assert.assertNotNull(expectedModel.getResources());
+
+		Assert.assertEquals(expectedModel.getResources().size(), actualResources.size());
+		Assert.assertEquals(1, actualResources.size());
+
+		final Resource expectedResource = expectedModel.getResources().iterator().next();
+		final Resource actualResource = actualResources.iterator().next();
+
+		Assert.assertNotNull(expectedResource.getUri());
+		Assert.assertNotNull(actualResource.getUri());
+		Assert.assertEquals(expectedResource.getUri(), actualResource.getUri());
+
+		Assert.assertNotNull(expectedResource.getStatements());
+		Assert.assertNotNull(actualResource.getStatements());
+
+		final Set<Statement> expectedStatements = expectedResource.getStatements();
+		final Set<Statement> actualStatements = actualResource.getStatements();
+
+		Assert.assertEquals(expectedStatements.size(), actualStatements.size());
+
+		final Iterator<Statement> expectedIter = expectedStatements.iterator();
+		final Iterator<Statement> actualIter = actualStatements.iterator();
+
+		while(expectedIter.hasNext() && actualIter.hasNext()) {
+
+			final Statement expectedStatement = expectedIter.next();
+			final Statement actualStatement = actualIter.next();
+
+			Assert.assertEquals(expectedStatement, actualStatement);
+		}
+
+		Assert.assertFalse(expectedIter.hasNext());
+		Assert.assertFalse(actualIter.hasNext());
 	}
 }

@@ -1,12 +1,12 @@
 /**
  * Copyright (C) 2013 – 2015 SLUB Dresden & Avantgarde Labs GmbH (<code@dswarm.org>)
- *
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  *         http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -134,7 +134,7 @@ public class ModelParser {
 
 		final String resourceURI = jp.getCurrentName();
 
-		if(resourceURI == null || resourceURI.trim().isEmpty()) {
+		if (resourceURI == null || resourceURI.trim().isEmpty()) {
 
 			throw new JsonParseException("cannot parse Resource JSON, resource URI is empty", jp.getCurrentLocation());
 		}
@@ -148,8 +148,9 @@ public class ModelParser {
 
 		if (jp.getCurrentToken() != JsonToken.START_ARRAY) {
 
-			throw new JsonParseException(String.format("cannot parse Resource JSON, couldn't find statement array beginning; expected '[' but found '%s'",
-					jp.getCurrentToken()), jp.getCurrentLocation());
+			throw new JsonParseException(String.format(
+					"cannot parse Resource JSON, couldn't find statement array beginning; expected '[' but found '%s'", jp.getCurrentToken()),
+					jp.getCurrentLocation());
 		}
 
 		final Resource resource = new Resource(resourceURI);
@@ -183,66 +184,74 @@ public class ModelParser {
 					jp.getCurrentToken()), jp.getCurrentLocation());
 		}
 
-		String nextField = getNextField(jp);
+		Long id = null;
+		String uuid = null;
+		Node subject = null;
+		Predicate predicate = null;
+		Node object = null;
+		Long order = null;
+		String evidence = null;
+		String confidence = null;
 
-		final Long id = getId(jp, nextField);
+		while (jp.nextToken() != JsonToken.END_OBJECT) {
 
-		if (id != null) {
+			if (jp.getCurrentToken() == JsonToken.FIELD_NAME) {
 
-			nextField = getNextField(jp);
+				final String nextField = jp.getCurrentName();
+
+				switch (nextField) {
+
+					case ID_IDENTIFIER:
+
+						id = getLongValue(jp);
+
+						break;
+					case UUID_IDENTIFIER:
+
+						uuid = getStringValue(jp);
+
+						break;
+					case SUBJECT_IDENTIFIER:
+
+						subject = getSubjectNode(jp, nextField);
+
+						break;
+					case PREDICATE_IDENTIFIER:
+
+						predicate = getPredicate(jp, nextField);
+
+						break;
+					case OBJECT_IDENTIFIER:
+
+						object = getObjectNode(jp, nextField);
+
+						break;
+					case ORDER_IDENTIFIER:
+
+						order = getLongValue(jp);
+
+						break;
+					case EVIDENCE_IDENTIFIER:
+
+						evidence = getStringValue(jp);
+
+						break;
+					case CONFIDENCE_IDENTIFIER:
+
+						confidence = getStringValue(jp);
+
+						break;
+					default:
+
+						throw new JsonParseException(String.format(
+								"unexpected JSON token; expected one of '%s','%s','%s','%s','%s','%s','%s','%s', for this statement, but found '%s'",
+								ID_IDENTIFIER, UUID_IDENTIFIER, SUBJECT_IDENTIFIER, PREDICATE_IDENTIFIER, OBJECT_IDENTIFIER, ORDER_IDENTIFIER,
+								EVIDENCE_IDENTIFIER, CONFIDENCE_IDENTIFIER, jp.getCurrentToken()), jp.getCurrentLocation());
+				}
+			}
 		}
 
-		final String uuid = getUuid(jp, nextField);
-
-		if (uuid != null) {
-
-			nextField = getNextField(jp);
-		}
-
-		final Node subject = getSubjectNode(jp, nextField);
-
-		nextField = getNextField(jp);
-
-		final Predicate predicate = getPredicate(jp, nextField);
-
-		nextField = getNextField(jp);
-
-		final Node object = getObjectNode(jp, nextField);
-
-		if (jp.nextToken() == JsonToken.END_OBJECT) {
-
-			return createStatement(id, uuid, subject, predicate, object, null, null, null);
-		}
-
-		nextField = jp.getCurrentName();
-
-		final Long order = getOrder(jp, nextField);
-
-		if (jp.nextToken() == JsonToken.END_OBJECT) {
-
-			return createStatement(id, uuid, subject, predicate, object, order, null, null);
-		}
-
-		if (order != null) {
-
-			nextField = jp.getCurrentName();
-		}
-
-		final String evidence = getEvidence(jp, nextField);
-
-		if (jp.nextToken() == JsonToken.END_OBJECT) {
-
-			return createStatement(id, uuid, subject, predicate, object, order, evidence, null);
-		}
-
-		if (evidence != null) {
-
-			nextField = jp.getCurrentName();
-		}
-
-		final String confidence = getConfidence(jp, nextField);
-
-		if (jp.nextToken() == JsonToken.END_OBJECT) {
+		if (jp.getCurrentToken() == JsonToken.END_OBJECT) {
 
 			return createStatement(id, uuid, subject, predicate, object, order, evidence, confidence);
 		}
@@ -274,17 +283,12 @@ public class ModelParser {
 		return getLongValue(jp, nextField, ID_IDENTIFIER);
 	}
 
-	private String getUuid(final JsonParser jp, final String nextField) throws IOException {
-
-		return getStringValue(jp, nextField, UUID_IDENTIFIER);
-	}
-
 	private Node getSubjectNode(final JsonParser jp, final String nextField) throws IOException {
 
-		if(!SUBJECT_IDENTIFIER.equals(nextField)) {
+		if (!SUBJECT_IDENTIFIER.equals(nextField)) {
 
-			throw new JsonParseException(String.format("unexpected JSON token; expected subject node, but found '%s'",
-					jp.getCurrentToken()), jp.getCurrentLocation());
+			throw new JsonParseException(String.format("unexpected JSON token; expected subject node, but found '%s'", jp.getCurrentToken()),
+					jp.getCurrentLocation());
 		}
 
 		jp.nextToken();
@@ -354,10 +358,10 @@ public class ModelParser {
 
 	private Node getObjectNode(final JsonParser jp, final String nextField) throws IOException {
 
-		if(!OBJECT_IDENTIFIER.equals(nextField)) {
+		if (!OBJECT_IDENTIFIER.equals(nextField)) {
 
-			throw new JsonParseException(String.format("unexpected JSON token; expected object node, but found '%s'",
-					jp.getCurrentToken()), jp.getCurrentLocation());
+			throw new JsonParseException(String.format("unexpected JSON token; expected object node, but found '%s'", jp.getCurrentToken()),
+					jp.getCurrentLocation());
 		}
 
 		jp.nextToken();
@@ -436,21 +440,6 @@ public class ModelParser {
 				jp.getCurrentToken()), jp.getCurrentLocation());
 	}
 
-	private Long getOrder(final JsonParser jp, final String nextField) throws IOException {
-
-		return getLongValue(jp, nextField, ORDER_IDENTIFIER);
-	}
-
-	private String getEvidence(final JsonParser jp, final String nextField) throws IOException {
-
-		return getStringValue(jp, nextField, EVIDENCE_IDENTIFIER);
-	}
-
-	private String getConfidence(final JsonParser jp, final String nextField) throws IOException {
-
-		return getStringValue(jp, nextField, CONFIDENCE_IDENTIFIER);
-	}
-
 	private Long getLongValue(final JsonParser jp, final String nextField, final String identifier) throws IOException {
 
 		if (identifier.equals(nextField)) {
@@ -461,6 +450,12 @@ public class ModelParser {
 		}
 
 		return null;
+	}
+
+	private Long getLongValue(final JsonParser jp) throws IOException {
+
+		jp.nextToken();
+		return jp.getValueAsLong();
 	}
 
 	private String getURI(final JsonParser jp, final String nextField) throws IOException {
@@ -488,6 +483,12 @@ public class ModelParser {
 		}
 
 		return null;
+	}
+
+	private String getStringValue(final JsonParser jp) throws IOException {
+
+		jp.nextToken();
+		return jp.getText();
 	}
 
 	private String getNextField(final JsonParser jp) throws IOException {

@@ -36,6 +36,17 @@ import com.fasterxml.jackson.databind.node.JsonNodeType;
  */
 public class StatementDeserializer extends JsonDeserializer<Statement> {
 
+	private static final String ID = "id";
+	private static final String UUID = "uuid";
+	private static final String SUBJECT = "s";
+	private static final String URI = "uri";
+	private static final String PREDICATE = "p";
+	private static final String OBJECT = "o";
+	private static final String VALUE = "v";
+	private static final String ORDER = "order";
+	private static final String EVIDENCE = "evidence";
+	private static final String CONFIDENCE = "confidence";
+
 	@Override
 	public Statement deserialize(final JsonParser jp, final DeserializationContext ctxt) throws IOException {
 
@@ -53,7 +64,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 			return null;
 		}
 
-		final JsonNode idNode = node.get("id");
+		final JsonNode idNode = node.get(ID);
 
 		Long id = null;
 
@@ -61,14 +72,14 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 
 			try {
 
-				id = idNode.asLong();
+				id = idNode.longValue();
 			} catch (final Exception e) {
 
 				id = null;
 			}
 		}
 
-		final JsonNode uuidNode = node.get("uuid");
+		final JsonNode uuidNode = node.get(UUID);
 
 		String uuid = null;
 
@@ -77,7 +88,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 			uuid = uuidNode.asText();
 		}
 
-		final JsonNode subjectNode = node.get("s");
+		final JsonNode subjectNode = node.get(SUBJECT);
 
 		if (subjectNode == null) {
 
@@ -86,7 +97,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 
 		final Node subject;
 
-		if (subjectNode.get("uri") != null) {
+		if (subjectNode.get(URI) != null) {
 
 			// resource node
 			subject = subjectNode.traverse(oc).readValueAs(ResourceNode.class);
@@ -96,7 +107,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 			subject = subjectNode.traverse(oc).readValueAs(Node.class);
 		}
 
-		final JsonNode predicateNode = node.get("p");
+		final JsonNode predicateNode = node.get(PREDICATE);
 
 		if (predicateNode == null) {
 
@@ -105,7 +116,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 
 		final Predicate predicate = predicateNode.traverse(oc).readValueAs(Predicate.class);
 
-		final JsonNode objectNode = node.get("o");
+		final JsonNode objectNode = node.get(OBJECT);
 
 		if (objectNode == null) {
 
@@ -114,11 +125,11 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 
 		final Node object;
 
-		if (objectNode.get("uri") != null) {
+		if (objectNode.get(URI) != null) {
 
 			// resource node
 			object = objectNode.traverse(oc).readValueAs(ResourceNode.class);
-		} else if (objectNode.get("v") != null) {
+		} else if (objectNode.get(VALUE) != null) {
 
 			// literal node
 			object = objectNode.traverse(oc).readValueAs(LiteralNode.class);
@@ -128,7 +139,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 			object = objectNode.traverse(oc).readValueAs(Node.class);
 		}
 
-		final JsonNode orderNode = node.get("order");
+		final JsonNode orderNode = node.get(ORDER);
 
 		Long order = null;
 
@@ -143,7 +154,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 			}
 		}
 
-		final JsonNode evidenceNode = node.get("evidence");
+		final JsonNode evidenceNode = node.get(EVIDENCE);
 
 		String evidence = null;
 
@@ -152,7 +163,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 			evidence = evidenceNode.asText();
 		}
 
-		final JsonNode confidenceNode = node.get("confidence");
+		final JsonNode confidenceNode = node.get(CONFIDENCE);
 
 		String confidence = null;
 

@@ -68,7 +68,7 @@ public class StatementTest {
 
 		final ResourceNode subject = new ResourceNode(1, "http://data.slub-dresden.de/datamodels/22/records/18d68601-0623-42b4-ad89-f8954cc25912");
 		final Predicate predicate = new Predicate("http://www.openarchives.org/OAI/2.0/header");
-		final Node object = new ResourceNode(2, "http://example.com/dataresource", "http://example.com");
+		final Node object = new ResourceNode((long) 2, "http://example.com/dataresource", "http://example.com");
 
 		final Statement statement = new Statement(subject, predicate, object);
 		statement.setId(1);
@@ -84,7 +84,7 @@ public class StatementTest {
 
 		final ResourceNode subject = new ResourceNode(1, "http://data.slub-dresden.de/datamodels/22/records/18d68601-0623-42b4-ad89-f8954cc25912");
 		final Predicate predicate = new Predicate("http://www.openarchives.org/OAI/2.0/header");
-		final Node object = new ResourceNode(2, "http://example.com/dataresource", "http://example.com");
+		final Node object = new ResourceNode((long) 2, "http://example.com/dataresource", "http://example.com");
 
 		final Statement statement = new Statement(subject, predicate, object);
 		statement.setId(1);
@@ -268,7 +268,7 @@ public class StatementTest {
 		final ResourceNode expectedSubject = new ResourceNode(1,
 				"http://data.slub-dresden.de/datamodels/22/records/18d68601-0623-42b4-ad89-f8954cc25912");
 		final Predicate expectedPredicate = new Predicate("http://www.openarchives.org/OAI/2.0/header");
-		final Node expectedObject = new ResourceNode(2, "http://example.com/dataresource", "http://example.com");
+		final Node expectedObject = new ResourceNode((long) 2, "http://example.com/dataresource", "http://example.com");
 
 		final Statement expectedStatement = new Statement(expectedSubject, expectedPredicate, expectedObject);
 		expectedStatement.setId(1);
@@ -302,7 +302,7 @@ public class StatementTest {
 		final ResourceNode expectedSubject = new ResourceNode(1,
 				"http://data.slub-dresden.de/datamodels/22/records/18d68601-0623-42b4-ad89-f8954cc25912");
 		final Predicate expectedPredicate = new Predicate("http://www.openarchives.org/OAI/2.0/header");
-		final Node expectedObject = new ResourceNode(2, "http://example.com/dataresource", "http://example.com");
+		final Node expectedObject = new ResourceNode((long) 2, "http://example.com/dataresource", "http://example.com");
 
 		final Statement expectedStatement = new Statement(expectedSubject, expectedPredicate, expectedObject);
 		expectedStatement.setId(1);

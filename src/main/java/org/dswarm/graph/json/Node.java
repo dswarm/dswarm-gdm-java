@@ -36,7 +36,7 @@ public class Node {
 		type = NodeType.BNode;
 	}
 
-	public Node(final long idArg, final NodeType typeArg) {
+	public Node(final Long idArg, final NodeType typeArg) {
 
 		id = idArg;
 		type = typeArg;
