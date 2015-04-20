@@ -89,16 +89,10 @@ public class ModelParser {
 
 		try {
 
-			System.out.println("current token before while:'" + jp.getCurrentToken() + "'");
-
 			while (jp.nextToken() != JsonToken.END_ARRAY && !subscriber.isUnsubscribed()) {
-
-				System.out.println("current token before parse resource:'" + jp.getCurrentToken() + "'");
 
 				subscriber.onNext(parseResource(jp));
 			}
-
-			System.out.println("current token after while:'" + jp.getCurrentToken() + "'");
 
 			subscriber.onCompleted();
 			subscriber.unsubscribe();
@@ -150,6 +144,12 @@ public class ModelParser {
 			final Statement statement = parseStatement(jp);
 
 			resource.addStatement(statement);
+		}
+
+		if (jp.nextToken() != JsonToken.END_OBJECT) {
+
+			throw new JsonParseException(String.format("cannot parse Resource JSON, couldn't find ending; expected '}' but found '%s'",
+					jp.getCurrentToken()), jp.getCurrentLocation());
 		}
 
 		return resource;

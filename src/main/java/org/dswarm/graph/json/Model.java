@@ -36,7 +36,7 @@ public class Model {
 	/**
 	 * ... linked hash set to keep the original order of the resources ...
 	 */
-	private Map<String, Resource>	resources	= new LinkedHashMap<String, Resource>();
+	private Map<String, Resource>	resources	= new LinkedHashMap<>();
 
 	public Collection<Resource> getResources() {
 
