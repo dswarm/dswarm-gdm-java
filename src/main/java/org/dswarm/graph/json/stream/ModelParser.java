@@ -59,16 +59,35 @@ public class ModelParser {
 
 				try {
 
+					if(modelStream == null) {
+
+						// no stream, no model
+
+						subscriber.onCompleted();
+						subscriber.unsubscribe();
+
+						return;
+					}
+
 					final JsonParser jp = jsonFactory.createParser(modelStream);
 
 					jp.nextToken();
 
 					if (!jp.hasCurrentToken()) {
 
-						subscriber.onError(new JsonParseException("cannot parse Model JSON, stream is empty", jp.getCurrentLocation()));
+						// empty stream, no model
+
+						jp.close();
+
+						subscriber.onCompleted();
+						subscriber.unsubscribe();
+
+						return;
 					}
 
 					if (jp.getCurrentToken() != JsonToken.START_ARRAY) {
+
+						jp.close();
 
 						subscriber.onError(new JsonParseException(String.format("cannot parse Model JSON, couldn't find beginning, found '%s'",
 								jp.getCurrentToken()), jp.getCurrentLocation()));
@@ -76,6 +95,10 @@ public class ModelParser {
 
 					parseResources(subscriber, jp);
 
+					subscriber.onCompleted();
+					subscriber.unsubscribe();
+
+					jp.close();
 				} catch (final IOException e) {
 
 					subscriber.onError(e);
@@ -92,9 +115,6 @@ public class ModelParser {
 
 				subscriber.onNext(parseResource(jp));
 			}
-
-			subscriber.onCompleted();
-			subscriber.unsubscribe();
 		} catch (final IOException e) {
 
 			subscriber.onError(e);
@@ -105,10 +125,14 @@ public class ModelParser {
 
 		if (!jp.hasCurrentToken()) {
 
+			jp.close();
+
 			throw new JsonParseException("cannot parse Resource JSON, stream is empty", jp.getCurrentLocation());
 		}
 
 		if (jp.getCurrentToken() != JsonToken.START_OBJECT) {
+
+			jp.close();
 
 			throw new JsonParseException(String.format("cannot parse Resource JSON, couldn't find beginning; expected '{' but found '%s'",
 					jp.getCurrentToken()), jp.getCurrentLocation());
@@ -120,6 +144,8 @@ public class ModelParser {
 
 		if (resourceURI == null || resourceURI.trim().isEmpty()) {
 
+			jp.close();
+
 			throw new JsonParseException("cannot parse Resource JSON, resource URI is empty", jp.getCurrentLocation());
 		}
 
@@ -127,10 +153,14 @@ public class ModelParser {
 
 		if (!jp.hasCurrentToken()) {
 
+			jp.close();
+
 			throw new JsonParseException("cannot parse Resource JSON, stream is empty", jp.getCurrentLocation());
 		}
 
 		if (jp.getCurrentToken() != JsonToken.START_ARRAY) {
+
+			jp.close();
 
 			throw new JsonParseException(String.format(
 					"cannot parse Resource JSON, couldn't find statement array beginning; expected '[' but found '%s'", jp.getCurrentToken()),
@@ -148,6 +178,8 @@ public class ModelParser {
 
 		if (jp.nextToken() != JsonToken.END_OBJECT) {
 
+			jp.close();
+
 			throw new JsonParseException(String.format("cannot parse Resource JSON, couldn't find ending; expected '}' but found '%s'",
 					jp.getCurrentToken()), jp.getCurrentLocation());
 		}
@@ -159,10 +191,14 @@ public class ModelParser {
 
 		if (!jp.hasCurrentToken()) {
 
+			jp.close();
+
 			throw new JsonParseException("cannot parse Statement JSON, stream is empty", jp.getCurrentLocation());
 		}
 
 		if (jp.getCurrentToken() != JsonToken.START_OBJECT) {
+
+			jp.close();
 
 			throw new JsonParseException(String.format("cannot parse Statement JSON, couldn't find beginning; expected '{' but found '%s'",
 					jp.getCurrentToken()), jp.getCurrentLocation());
@@ -227,6 +263,8 @@ public class ModelParser {
 						break;
 					default:
 
+						jp.close();
+
 						throw new JsonParseException(String.format(
 								"unexpected JSON token; expected one of '%s','%s','%s','%s','%s','%s','%s','%s', for this statement, but found '%s'",
 								ModelStatics.ID_IDENTIFIER, ModelStatics.UUID_IDENTIFIER, ModelStatics.SUBJECT_IDENTIFIER, ModelStatics.PREDICATE_IDENTIFIER, ModelStatics.OBJECT_IDENTIFIER, ModelStatics.ORDER_IDENTIFIER,
@@ -239,6 +277,8 @@ public class ModelParser {
 
 			return createStatement(id, uuid, subject, predicate, object, order, evidence, confidence);
 		}
+
+		jp.close();
 
 		throw new JsonParseException(String.format("unexpected JSON token; expected end of object for this statement, but found '%s'",
 				jp.getCurrentToken()), jp.getCurrentLocation());
@@ -271,6 +311,8 @@ public class ModelParser {
 
 		if (!ModelStatics.SUBJECT_IDENTIFIER.equals(nextField)) {
 
+			jp.close();
+
 			throw new JsonParseException(String.format("unexpected JSON token; expected subject node, but found '%s'", jp.getCurrentToken()),
 					jp.getCurrentLocation());
 		}
@@ -279,10 +321,14 @@ public class ModelParser {
 
 		if (!jp.hasCurrentToken()) {
 
+			jp.close();
+
 			throw new JsonParseException("cannot parse subject node JSON, stream is empty", jp.getCurrentLocation());
 		}
 
 		if (jp.getCurrentToken() != JsonToken.START_OBJECT) {
+
+			jp.close();
 
 			throw new JsonParseException(String.format("cannot parse subject node JSON, couldn't find beginning; expected '{' but found '%s'",
 					jp.getCurrentToken()), jp.getCurrentLocation());
@@ -329,6 +375,8 @@ public class ModelParser {
 			}
 		}
 
+		jp.close();
+
 		throw new JsonParseException(String.format("unexpected JSON token; expected end of object for this subject node, but found '%s'",
 				jp.getCurrentToken()), jp.getCurrentLocation());
 	}
@@ -344,6 +392,8 @@ public class ModelParser {
 
 		if (!ModelStatics.OBJECT_IDENTIFIER.equals(nextField)) {
 
+			jp.close();
+
 			throw new JsonParseException(String.format("unexpected JSON token; expected object node, but found '%s'", jp.getCurrentToken()),
 					jp.getCurrentLocation());
 		}
@@ -352,10 +402,14 @@ public class ModelParser {
 
 		if (!jp.hasCurrentToken()) {
 
+			jp.close();
+
 			throw new JsonParseException("cannot parse object node JSON, stream is empty", jp.getCurrentLocation());
 		}
 
 		if (jp.getCurrentToken() != JsonToken.START_OBJECT) {
+
+			jp.close();
 
 			throw new JsonParseException(String.format("cannot parse object node JSON, couldn't find beginning; expected '{' but found '%s'",
 					jp.getCurrentToken()), jp.getCurrentLocation());
@@ -401,6 +455,8 @@ public class ModelParser {
 				}
 			}
 
+			jp.close();
+
 			throw new JsonParseException(String.format("unexpected JSON token; expected end of object for this object literal node, but found '%s'",
 					jp.getCurrentToken()), jp.getCurrentLocation());
 		}
@@ -419,6 +475,8 @@ public class ModelParser {
 				return new ResourceNode(resourceURI, dataModelURI);
 			}
 		}
+
+		jp.close();
 
 		throw new JsonParseException(String.format("unexpected JSON token; expected end of object for this object resource node, but found '%s'",
 				jp.getCurrentToken()), jp.getCurrentLocation());
