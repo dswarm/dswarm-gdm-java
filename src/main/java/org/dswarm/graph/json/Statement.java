@@ -187,4 +187,8 @@ public class Statement {
 
 		return result;
 	}
+	
+	public String toString(){
+		return "("+ subject + "," + predicate + "," + object + ") Order: " + getOrder(); 
+	}
 }

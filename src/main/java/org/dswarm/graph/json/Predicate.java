@@ -75,4 +75,9 @@ public class Predicate {
 			return false;
 		return true;
 	}
+
+
+	public String toString() {
+		return getUri();
+	}
 }
