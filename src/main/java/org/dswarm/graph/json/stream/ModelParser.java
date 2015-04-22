@@ -39,22 +39,6 @@ import com.fasterxml.jackson.core.JsonToken;
  */
 public class ModelParser {
 
-	private static final String	ID_IDENTIFIER			= "id";
-	private static final String	UUID_IDENTIFIER			= "uuid";
-
-	private static final String	SUBJECT_IDENTIFIER		= "s";
-	private static final String	PREDICATE_IDENTIFIER	= "p";
-	private static final String	OBJECT_IDENTIFIER		= "o";
-
-	private static final String	URI_IDENTIFIER			= "uri";
-	private static final String	DATA_MODEL_IDENTIFIER	= "data_model";
-
-	private static final String	VALUE_IDENTIFIER		= "v";
-
-	private static final String	ORDER_IDENTIFIER		= "order";
-	private static final String	EVIDENCE_IDENTIFIER		= "evidence";
-	private static final String	CONFIDENCE_IDENTIFIER	= "confidence";
-
 	private final InputStream	modelStream;
 	private final JsonFactory	jsonFactory;
 
@@ -201,42 +185,42 @@ public class ModelParser {
 
 				switch (nextField) {
 
-					case ID_IDENTIFIER:
+					case ModelStatics.ID_IDENTIFIER:
 
 						id = getLongValue(jp);
 
 						break;
-					case UUID_IDENTIFIER:
+					case ModelStatics.UUID_IDENTIFIER:
 
 						uuid = getStringValue(jp);
 
 						break;
-					case SUBJECT_IDENTIFIER:
+					case ModelStatics.SUBJECT_IDENTIFIER:
 
 						subject = getSubjectNode(jp, nextField);
 
 						break;
-					case PREDICATE_IDENTIFIER:
+					case ModelStatics.PREDICATE_IDENTIFIER:
 
 						predicate = getPredicate(jp, nextField);
 
 						break;
-					case OBJECT_IDENTIFIER:
+					case ModelStatics.OBJECT_IDENTIFIER:
 
 						object = getObjectNode(jp, nextField);
 
 						break;
-					case ORDER_IDENTIFIER:
+					case ModelStatics.ORDER_IDENTIFIER:
 
 						order = getLongValue(jp);
 
 						break;
-					case EVIDENCE_IDENTIFIER:
+					case ModelStatics.EVIDENCE_IDENTIFIER:
 
 						evidence = getStringValue(jp);
 
 						break;
-					case CONFIDENCE_IDENTIFIER:
+					case ModelStatics.CONFIDENCE_IDENTIFIER:
 
 						confidence = getStringValue(jp);
 
@@ -245,8 +229,8 @@ public class ModelParser {
 
 						throw new JsonParseException(String.format(
 								"unexpected JSON token; expected one of '%s','%s','%s','%s','%s','%s','%s','%s', for this statement, but found '%s'",
-								ID_IDENTIFIER, UUID_IDENTIFIER, SUBJECT_IDENTIFIER, PREDICATE_IDENTIFIER, OBJECT_IDENTIFIER, ORDER_IDENTIFIER,
-								EVIDENCE_IDENTIFIER, CONFIDENCE_IDENTIFIER, jp.getCurrentToken()), jp.getCurrentLocation());
+								ModelStatics.ID_IDENTIFIER, ModelStatics.UUID_IDENTIFIER, ModelStatics.SUBJECT_IDENTIFIER, ModelStatics.PREDICATE_IDENTIFIER, ModelStatics.OBJECT_IDENTIFIER, ModelStatics.ORDER_IDENTIFIER,
+								ModelStatics.EVIDENCE_IDENTIFIER, ModelStatics.CONFIDENCE_IDENTIFIER, jp.getCurrentToken()), jp.getCurrentLocation());
 				}
 			}
 		}
@@ -280,12 +264,12 @@ public class ModelParser {
 
 	private Long getId(final JsonParser jp, final String nextField) throws IOException {
 
-		return getLongValue(jp, nextField, ID_IDENTIFIER);
+		return getLongValue(jp, nextField, ModelStatics.ID_IDENTIFIER);
 	}
 
 	private Node getSubjectNode(final JsonParser jp, final String nextField) throws IOException {
 
-		if (!SUBJECT_IDENTIFIER.equals(nextField)) {
+		if (!ModelStatics.SUBJECT_IDENTIFIER.equals(nextField)) {
 
 			throw new JsonParseException(String.format("unexpected JSON token; expected subject node, but found '%s'", jp.getCurrentToken()),
 					jp.getCurrentLocation());
@@ -351,14 +335,14 @@ public class ModelParser {
 
 	private Predicate getPredicate(final JsonParser jp, final String nextField) throws IOException {
 
-		final String predicateURI = getStringValue(jp, nextField, PREDICATE_IDENTIFIER);
+		final String predicateURI = getStringValue(jp, nextField, ModelStatics.PREDICATE_IDENTIFIER);
 
 		return new Predicate(predicateURI);
 	}
 
 	private Node getObjectNode(final JsonParser jp, final String nextField) throws IOException {
 
-		if (!OBJECT_IDENTIFIER.equals(nextField)) {
+		if (!ModelStatics.OBJECT_IDENTIFIER.equals(nextField)) {
 
 			throw new JsonParseException(String.format("unexpected JSON token; expected object node, but found '%s'", jp.getCurrentToken()),
 					jp.getCurrentLocation());
@@ -460,17 +444,17 @@ public class ModelParser {
 
 	private String getURI(final JsonParser jp, final String nextField) throws IOException {
 
-		return getStringValue(jp, nextField, URI_IDENTIFIER);
+		return getStringValue(jp, nextField, ModelStatics.URI_IDENTIFIER);
 	}
 
 	private String getDataModel(final JsonParser jp, final String nextField) throws IOException {
 
-		return getStringValue(jp, nextField, DATA_MODEL_IDENTIFIER);
+		return getStringValue(jp, nextField, ModelStatics.DATA_MODEL_IDENTIFIER);
 	}
 
 	private String getValue(final JsonParser jp, final String nextField) throws IOException {
 
-		return getStringValue(jp, nextField, VALUE_IDENTIFIER);
+		return getStringValue(jp, nextField, ModelStatics.VALUE_IDENTIFIER);
 	}
 
 	private String getStringValue(final JsonParser jp, final String nextField, final String identifier) throws IOException {
