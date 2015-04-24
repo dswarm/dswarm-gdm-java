@@ -71,6 +71,11 @@ public class Model {
 		return resources.get(resourceUri);
 	}
 
+	public Set<String> getResourceURIs() {
+
+		return resources.keySet();
+	}
+
 	public long size() {
 
 		long size = 0;
