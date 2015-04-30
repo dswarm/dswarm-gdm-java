@@ -17,20 +17,20 @@ package org.dswarm.graph.json.deserializer;
 
 import java.io.IOException;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.ObjectCodec;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.JsonNodeType;
-
+import org.dswarm.graph.json.stream.ModelStatics;
 import org.dswarm.graph.json.LiteralNode;
 import org.dswarm.graph.json.Node;
 import org.dswarm.graph.json.Predicate;
 import org.dswarm.graph.json.ResourceNode;
 import org.dswarm.graph.json.Statement;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.ObjectCodec;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.JsonNodeType;
 
 /**
  * @author tgaengler
@@ -54,7 +54,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 			return null;
 		}
 
-		final JsonNode idNode = node.get("id");
+		final JsonNode idNode = node.get(ModelStatics.ID_IDENTIFIER);
 
 		Long id = null;
 
@@ -62,14 +62,14 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 
 			try {
 
-				id = idNode.asLong();
+				id = idNode.longValue();
 			} catch (final Exception e) {
 
 				id = null;
 			}
 		}
 
-		final JsonNode uuidNode = node.get("uuid");
+		final JsonNode uuidNode = node.get(ModelStatics.UUID_IDENTIFIER);
 
 		String uuid = null;
 
@@ -78,7 +78,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 			uuid = uuidNode.asText();
 		}
 
-		final JsonNode subjectNode = node.get("s");
+		final JsonNode subjectNode = node.get(ModelStatics.SUBJECT_IDENTIFIER);
 
 		if (subjectNode == null) {
 
@@ -87,7 +87,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 
 		final Node subject;
 
-		if (subjectNode.get("uri") != null) {
+		if (subjectNode.get(ModelStatics.URI_IDENTIFIER) != null) {
 
 			// resource node
 			subject = subjectNode.traverse(oc).readValueAs(ResourceNode.class);
@@ -97,7 +97,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 			subject = subjectNode.traverse(oc).readValueAs(Node.class);
 		}
 
-		final JsonNode predicateNode = node.get("p");
+		final JsonNode predicateNode = node.get(ModelStatics.PREDICATE_IDENTIFIER);
 
 		if (predicateNode == null) {
 
@@ -106,7 +106,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 
 		final Predicate predicate = predicateNode.traverse(oc).readValueAs(Predicate.class);
 
-		final JsonNode objectNode = node.get("o");
+		final JsonNode objectNode = node.get(ModelStatics.OBJECT_IDENTIFIER);
 
 		if (objectNode == null) {
 
@@ -115,11 +115,11 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 
 		final Node object;
 
-		if (objectNode.get("uri") != null) {
+		if (objectNode.get(ModelStatics.URI_IDENTIFIER) != null) {
 
 			// resource node
 			object = objectNode.traverse(oc).readValueAs(ResourceNode.class);
-		} else if (objectNode.get("v") != null) {
+		} else if (objectNode.get(ModelStatics.VALUE_IDENTIFIER) != null) {
 
 			// literal node
 			object = objectNode.traverse(oc).readValueAs(LiteralNode.class);
@@ -129,7 +129,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 			object = objectNode.traverse(oc).readValueAs(Node.class);
 		}
 
-		final JsonNode orderNode = node.get("order");
+		final JsonNode orderNode = node.get(ModelStatics.ORDER_IDENTIFIER);
 
 		Long order = null;
 
@@ -144,7 +144,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 			}
 		}
 
-		final JsonNode evidenceNode = node.get("evidence");
+		final JsonNode evidenceNode = node.get(ModelStatics.EVIDENCE_IDENTIFIER);
 
 		String evidence = null;
 
@@ -153,7 +153,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 			evidence = evidenceNode.asText();
 		}
 
-		final JsonNode confidenceNode = node.get("confidence");
+		final JsonNode confidenceNode = node.get(ModelStatics.CONFIDENCE_IDENTIFIER);
 
 		String confidence = null;
 

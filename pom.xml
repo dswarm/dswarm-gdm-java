@@ -21,7 +21,7 @@
 
 	<groupId>org.dswarm</groupId>
 	<artifactId>graph-json</artifactId>
-	<version>0.0.3-SNAPSHOT</version>
+	<version>0.0.4-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<url>http://dswarm.org/</url>
@@ -31,18 +31,24 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.source.version>1.7</java.source.version>
 		<java.target.version>1.7</java.target.version>
-		<maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
-		<maven-assembly-plugin.version>2.4</maven-assembly-plugin.version>
-		<maven-resources-plugin.version>2.6</maven-resources-plugin.version>
-		<maven-install-plugin.version>2.5.1</maven-install-plugin.version>
-		<maven-surefire-plugin.version>2.16</maven-surefire-plugin.version>
-		<maven-clean-plugin.version>2.5</maven-clean-plugin.version>
-		<maven-release-plugin.version>2.4.2</maven-release-plugin.version>
+		<maven-compiler-plugin.version>3.2</maven-compiler-plugin.version>
+		<maven-assembly-plugin.version>2.5.3</maven-assembly-plugin.version>
+		<maven-resources-plugin.version>2.7</maven-resources-plugin.version>
+		<maven-install-plugin.version>2.5.2</maven-install-plugin.version>
+		<maven-surefire-plugin.version>2.18.1</maven-surefire-plugin.version>
+		<maven-clean-plugin.version>2.6.1</maven-clean-plugin.version>
+		<maven-release-plugin.version>2.5.1</maven-release-plugin.version>
+		<maven-version-plugin.version>2.1</maven-version-plugin.version>
 		<!-- note this might deliver conflicts -->
-		<jackson.version>2.4.2</jackson.version>
-		<junit.version>4.11</junit.version>
+		<jackson.version>2.5.2</jackson.version>
+		<junit.version>4.12</junit.version>
 		<google.guava.version>18.0</google.guava.version>
+		<rxjava.version>1.0.9</rxjava.version>
 	</properties>
+
+	<prerequisites>
+		<maven>2.2.1</maven>
+	</prerequisites>
 
 	<build>
 		<plugins>
@@ -125,6 +131,11 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>versions-maven-plugin</artifactId>
+				<version>${maven-version-plugin.version}</version>
+			</plugin>
 		</plugins>
 		<resources>
 			<resource>
@@ -139,6 +150,16 @@
 			</testResource>
 		</testResources>
 	</build>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>versions-maven-plugin</artifactId>
+				<version>${maven-version-plugin.version}</version>
+			</plugin>
+		</plugins>
+	</reporting>
 
 	<distributionManagement>
 		<repository>
@@ -181,6 +202,11 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
 			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.reactivex</groupId>
+			<artifactId>rxjava</artifactId>
+			<version>${rxjava.version}</version>
 		</dependency>
 	</dependencies>
 </project>

@@ -36,7 +36,7 @@ public class Resource {
 	/**
 	 * ... linked hash set to keep the original order of the statements ...
 	 */
-	private Set<Statement>	statements	= new LinkedHashSet<Statement>();
+	private Set<Statement>	statements	= new LinkedHashSet<>();
 
 	public Resource(final String uriArg) {
 

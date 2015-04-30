@@ -50,8 +50,9 @@ public class ResourceNode extends Node {
 		uri = uriArg;
 	}
 
+	// id param needs to be Long; otherwise default value is 0 at deserialization
 	@JsonCreator
-	public ResourceNode(@JsonProperty("id") final long idArg, @JsonProperty("uri") final String uriArg, @JsonProperty("data_model") final String dataModelArg) {
+	public ResourceNode(@JsonProperty("id") final Long idArg, @JsonProperty("uri") final String uriArg, @JsonProperty("data_model") final String dataModelArg) {
 
 		super(idArg, NodeType.Resource);
 

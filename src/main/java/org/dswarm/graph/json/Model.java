@@ -36,7 +36,7 @@ public class Model {
 	/**
 	 * ... linked hash set to keep the original order of the resources ...
 	 */
-	private Map<String, Resource>	resources	= new LinkedHashMap<String, Resource>();
+	private Map<String, Resource>	resources	= new LinkedHashMap<>();
 
 	public Collection<Resource> getResources() {
 
@@ -69,6 +69,11 @@ public class Model {
 	public Resource getResource(final String resourceUri) {
 
 		return resources.get(resourceUri);
+	}
+
+	public Set<String> getResourceURIs() {
+
+		return resources.keySet();
 	}
 
 	public long size() {

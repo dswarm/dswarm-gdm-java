@@ -29,7 +29,7 @@ public class LiteralNodeTest {
 	@Test
 	public void testSerializeLiteralNode() throws IOException {
 
-		final LiteralNode literalNode = new LiteralNode(267, "907");
+		final LiteralNode literalNode = new LiteralNode((long) 267, "907");
 		final String literalNodeJSONString = Util.getJSONObjectMapper().writeValueAsString(literalNode);
 
 		final String expectedJSONString = TestUtil.getResourceAsString("literal_node.json");
@@ -40,7 +40,7 @@ public class LiteralNodeTest {
 	@Test
 	public void testSerializeEmptyLiteralNode() throws IOException {
 
-		final LiteralNode literalNode = new LiteralNode(267, "");
+		final LiteralNode literalNode = new LiteralNode((long) 267, "");
 		final String literalNodeJSONString = Util.getJSONObjectMapper().writeValueAsString(literalNode);
 
 		final String expectedJSONString = TestUtil.getResourceAsString("empty_literal_node.json");
@@ -56,7 +56,7 @@ public class LiteralNodeTest {
 
 		Assert.assertNotNull("deserialized literal node shouldn't be null", literalNode);
 
-		final LiteralNode expectedLiteralNode = new LiteralNode(267, "907");
+		final LiteralNode expectedLiteralNode = new LiteralNode((long) 267, "907");
 
 		Assert.assertEquals("ids of the literal nodes should be equal", expectedLiteralNode.getId(), literalNode.getId());
 		Assert.assertEquals("values of the literal nodes should be equal", expectedLiteralNode.getValue(), literalNode.getValue());
@@ -70,7 +70,7 @@ public class LiteralNodeTest {
 
 		Assert.assertNotNull("deserialized literal node shouldn't be null", literalNode);
 
-		final LiteralNode expectedLiteralNode = new LiteralNode(267, "");
+		final LiteralNode expectedLiteralNode = new LiteralNode((long) 267, "");
 
 		Assert.assertEquals("ids of the literal nodes should be equal", expectedLiteralNode.getId(), literalNode.getId());
 		Assert.assertEquals("values of the literal nodes should be equal", expectedLiteralNode.getValue(), literalNode.getValue());

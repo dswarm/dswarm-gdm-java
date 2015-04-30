@@ -41,7 +41,7 @@ public class ResourceNodeTest {
 	@Test
 	public void testSerializeDataModelResourceNode() throws IOException {
 
-		final ResourceNode resourceNode = new ResourceNode(1,
+		final ResourceNode resourceNode = new ResourceNode((long) 1,
 				"http://data.slub-dresden.de/datamodels/22/records/18d68601-0623-42b4-ad89-f8954cc25912", "http://data.slub-dresden.de/datamodels/22");
 		final String resourceNodeJSONString = Util.getJSONObjectMapper().writeValueAsString(resourceNode);
 
@@ -73,7 +73,7 @@ public class ResourceNodeTest {
 
 		Assert.assertNotNull("deserialized data model resource node shouldn't be null", resourceNode);
 
-		final ResourceNode expectedResourceNode = new ResourceNode(1,
+		final ResourceNode expectedResourceNode = new ResourceNode((long) 1,
 				"http://data.slub-dresden.de/datamodels/22/records/18d68601-0623-42b4-ad89-f8954cc25912", "http://data.slub-dresden.de/datamodels/22");
 
 		Assert.assertEquals("ids of the data model resource nodes should be equal", expectedResourceNode.getId(), resourceNode.getId());
