@@ -38,17 +38,21 @@ import com.fasterxml.jackson.core.JsonGenerator;
  */
 public class ModelBuilder {
 
-	private final OutputStream	modelStream;
-	private final JsonFactory	jsonFactory;
 	private final JsonGenerator	jg;
 
 	public ModelBuilder(final OutputStream modelStreamArg) throws IOException {
 
-		modelStream = modelStreamArg;
-		jsonFactory = Util.getJSONObjectMapper().getFactory();
+		final JsonFactory jsonFactory = Util.getJSONObjectMapper().getFactory();
 		// TODO: maybe add buffered output stream here
-		jg = jsonFactory.createGenerator(modelStream, JsonEncoding.UTF8);
+		jg = jsonFactory.createGenerator(modelStreamArg, JsonEncoding.UTF8);
 		init();
+	}
+
+	private static void checkNotNull(final Object object, final String message) throws JsonGenerationException {
+		if (object == null) {
+
+			throw new JsonGenerationException(message);
+		}
 	}
 
 	private void init() throws IOException {
@@ -58,22 +62,11 @@ public class ModelBuilder {
 
 	public void addResource(final Resource resource) throws IOException {
 
-		if (resource == null) {
-
-			throw new JsonGenerationException("couldn't write Resource JSON, because there is on Resource object");
-		}
+		checkNotNull(resource, "couldn't write Resource JSON, because there is no Resource object");
+		checkNotNull(resource.getUri(), "couldn't write Resource JSON, because there is no Resource URI");
 
 		jg.writeStartObject();
-
-		final String resourceURI = resource.getUri();
-
-		if (resourceURI == null) {
-
-			throw new JsonGenerationException("couldn't write Resource JSON, because there is not Resource URI");
-		}
-
-		jg.writeFieldName(resourceURI);
-
+		jg.writeFieldName(resource.getUri());
 		jg.writeStartArray();
 
 		final Set<Statement> statements = resource.getStatements();
@@ -152,10 +145,7 @@ public class ModelBuilder {
 
 	private void addSubject(final Node subject) throws IOException {
 
-		if (subject == null) {
-
-			throw new JsonGenerationException("couldn't write Statement JSON, because there is no subject");
-		}
+		checkNotNull(subject, "couldn't write Statement JSON, because there is no subject");
 
 		jg.writeFieldName(ModelStatics.SUBJECT_IDENTIFIER);
 
@@ -182,27 +172,15 @@ public class ModelBuilder {
 
 	private void addPredicate(final Predicate predicate) throws IOException {
 
-		if (predicate == null) {
+		checkNotNull(predicate, "couldn't write Statement JSON, because there is no predicate");
+		checkNotNull(predicate.getUri(), "couldn't write Statement JSON, because there is no predicate URI");
 
-			throw new JsonGenerationException("couldn't write Statement JSON, because there is no predicate");
-		}
-
-		final String predicateURI = predicate.getUri();
-
-		if (predicateURI == null) {
-
-			throw new JsonGenerationException("couldn't write Statement JSON, because there is no predicate URI");
-		}
-
-		jg.writeStringField(ModelStatics.PREDICATE_IDENTIFIER, predicateURI);
+		jg.writeStringField(ModelStatics.PREDICATE_IDENTIFIER, predicate.getUri());
 	}
 
 	private void addObject(final Node object) throws IOException {
 
-		if (object == null) {
-
-			throw new JsonGenerationException("couldn't write Statement JSON, because there is no object");
-		}
+		checkNotNull(object, "couldn't write Statement JSON, because there is no object");
 
 		jg.writeFieldName(ModelStatics.OBJECT_IDENTIFIER);
 
@@ -234,16 +212,11 @@ public class ModelBuilder {
 
 	private void addResourceNode(final ResourceNode resourceNode) throws IOException {
 
+		checkNotNull(resourceNode.getUri(), "couldn't write Statement JSON, resource URI needs to be available for URI resource");
+
 		addNodeHead(resourceNode);
 
-		final String resourceURI = resourceNode.getUri();
-
-		if (resourceURI == null) {
-
-			throw new JsonGenerationException("couldn't write Statement JSON, resource URI needs to be available for URI resource");
-		}
-
-		jg.writeStringField(ModelStatics.URI_IDENTIFIER, resourceURI);
+		jg.writeStringField(ModelStatics.URI_IDENTIFIER, resourceNode.getUri());
 
 		final String dataModelURI = resourceNode.getDataModel();
 
@@ -257,12 +230,7 @@ public class ModelBuilder {
 
 	private void addBNode(final Node bnode) throws IOException {
 
-		final Long id = bnode.getId();
-
-		if (id == null) {
-
-			throw new JsonGenerationException("couldn't write Statement JSON, bnode id needs to available");
-		}
+		checkNotNull(bnode.getId(), "couldn't write Statement JSON, bnode id needs to available");
 
 		addNodeHead(bnode);
 
@@ -271,16 +239,11 @@ public class ModelBuilder {
 
 	private void addLiteralNode(final LiteralNode literalNode) throws IOException {
 
+		checkNotNull(literalNode.getValue(), "couldn't write Statement JSON, literal value needs to be available");
+
 		addNodeHead(literalNode);
 
-		final String value = literalNode.getValue();
-
-		if(value == null) {
-
-			throw new JsonGenerationException("couldn't write Statement JSON, literal value needs to be available");
-		}
-
-		jg.writeStringField(ModelStatics.VALUE_IDENTIFIER, value);
+		jg.writeStringField(ModelStatics.VALUE_IDENTIFIER, literalNode.getValue());
 
 		jg.writeEndObject();
 	}

@@ -17,6 +17,7 @@ package org.dswarm.graph.json.deserializer;
 
 import java.io.IOException;
 
+import org.dswarm.graph.json.stream.ModelStatics;
 import org.dswarm.graph.json.LiteralNode;
 import org.dswarm.graph.json.Node;
 import org.dswarm.graph.json.Predicate;
@@ -36,17 +37,6 @@ import com.fasterxml.jackson.databind.node.JsonNodeType;
  */
 public class StatementDeserializer extends JsonDeserializer<Statement> {
 
-	private static final String ID = "id";
-	private static final String UUID = "uuid";
-	private static final String SUBJECT = "s";
-	private static final String URI = "uri";
-	private static final String PREDICATE = "p";
-	private static final String OBJECT = "o";
-	private static final String VALUE = "v";
-	private static final String ORDER = "order";
-	private static final String EVIDENCE = "evidence";
-	private static final String CONFIDENCE = "confidence";
-
 	@Override
 	public Statement deserialize(final JsonParser jp, final DeserializationContext ctxt) throws IOException {
 
@@ -64,7 +54,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 			return null;
 		}
 
-		final JsonNode idNode = node.get(ID);
+		final JsonNode idNode = node.get(ModelStatics.ID_IDENTIFIER);
 
 		Long id = null;
 
@@ -79,7 +69,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 			}
 		}
 
-		final JsonNode uuidNode = node.get(UUID);
+		final JsonNode uuidNode = node.get(ModelStatics.UUID_IDENTIFIER);
 
 		String uuid = null;
 
@@ -88,7 +78,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 			uuid = uuidNode.asText();
 		}
 
-		final JsonNode subjectNode = node.get(SUBJECT);
+		final JsonNode subjectNode = node.get(ModelStatics.SUBJECT_IDENTIFIER);
 
 		if (subjectNode == null) {
 
@@ -97,7 +87,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 
 		final Node subject;
 
-		if (subjectNode.get(URI) != null) {
+		if (subjectNode.get(ModelStatics.URI_IDENTIFIER) != null) {
 
 			// resource node
 			subject = subjectNode.traverse(oc).readValueAs(ResourceNode.class);
@@ -107,7 +97,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 			subject = subjectNode.traverse(oc).readValueAs(Node.class);
 		}
 
-		final JsonNode predicateNode = node.get(PREDICATE);
+		final JsonNode predicateNode = node.get(ModelStatics.PREDICATE_IDENTIFIER);
 
 		if (predicateNode == null) {
 
@@ -116,7 +106,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 
 		final Predicate predicate = predicateNode.traverse(oc).readValueAs(Predicate.class);
 
-		final JsonNode objectNode = node.get(OBJECT);
+		final JsonNode objectNode = node.get(ModelStatics.OBJECT_IDENTIFIER);
 
 		if (objectNode == null) {
 
@@ -125,11 +115,11 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 
 		final Node object;
 
-		if (objectNode.get(URI) != null) {
+		if (objectNode.get(ModelStatics.URI_IDENTIFIER) != null) {
 
 			// resource node
 			object = objectNode.traverse(oc).readValueAs(ResourceNode.class);
-		} else if (objectNode.get(VALUE) != null) {
+		} else if (objectNode.get(ModelStatics.VALUE_IDENTIFIER) != null) {
 
 			// literal node
 			object = objectNode.traverse(oc).readValueAs(LiteralNode.class);
@@ -139,7 +129,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 			object = objectNode.traverse(oc).readValueAs(Node.class);
 		}
 
-		final JsonNode orderNode = node.get(ORDER);
+		final JsonNode orderNode = node.get(ModelStatics.ORDER_IDENTIFIER);
 
 		Long order = null;
 
@@ -154,7 +144,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 			}
 		}
 
-		final JsonNode evidenceNode = node.get(EVIDENCE);
+		final JsonNode evidenceNode = node.get(ModelStatics.EVIDENCE_IDENTIFIER);
 
 		String evidence = null;
 
@@ -163,7 +153,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 			evidence = evidenceNode.asText();
 		}
 
-		final JsonNode confidenceNode = node.get(CONFIDENCE);
+		final JsonNode confidenceNode = node.get(ModelStatics.CONFIDENCE_IDENTIFIER);
 
 		String confidence = null;
 
