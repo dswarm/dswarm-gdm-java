@@ -273,7 +273,6 @@ public class ModelParser {
 			}
 		}
 
-		jp.close();
 		return createStatement(id, uuid, subject, predicate, object, order, evidence, confidence);
 	}
 
