@@ -39,6 +39,7 @@
 		<maven-clean-plugin.version>2.6.1</maven-clean-plugin.version>
 		<maven-release-plugin.version>2.5.1</maven-release-plugin.version>
 		<maven-version-plugin.version>2.1</maven-version-plugin.version>
+		<maven-source-plugin.version>2.4</maven-source-plugin.version>
 		<!-- note this might deliver conflicts -->
 		<jackson.version>2.5.2</jackson.version>
 		<junit.version>4.12</junit.version>
@@ -135,6 +136,19 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>versions-maven-plugin</artifactId>
 				<version>${maven-version-plugin.version}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>${maven-source-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 		<resources>
