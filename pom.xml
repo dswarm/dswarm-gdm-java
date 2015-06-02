@@ -29,8 +29,8 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.source.version>1.7</java.source.version>
-		<java.target.version>1.7</java.target.version>
+		<java.source.version>1.8</java.source.version>
+		<java.target.version>1.8</java.target.version>
 		<maven-compiler-plugin.version>3.2</maven-compiler-plugin.version>
 		<maven-assembly-plugin.version>2.5.3</maven-assembly-plugin.version>
 		<maven-resources-plugin.version>2.7</maven-resources-plugin.version>
@@ -40,19 +40,38 @@
 		<maven-release-plugin.version>2.5.1</maven-release-plugin.version>
 		<maven-version-plugin.version>2.1</maven-version-plugin.version>
 		<maven-source-plugin.version>2.4</maven-source-plugin.version>
+		<version.maven.plugin.license>2.7</version.maven.plugin.license>
+		<version.maven.plugin.jar>2.6</version.maven.plugin.jar>
+		<version.maven.plugin.deploy>2.8.2</version.maven.plugin.deploy>
+		<version.maven.plugin.site>3.4</version.maven.plugin.site>
 		<!-- note this might deliver conflicts -->
 		<jackson.version>2.5.2</jackson.version>
 		<junit.version>4.12</junit.version>
 		<google.guava.version>18.0</google.guava.version>
-		<rxjava.version>1.0.9</rxjava.version>
+		<rxjava.version>1.0.11</rxjava.version>
 	</properties>
 
 	<prerequisites>
-		<maven>2.2.1</maven>
+		<maven>3.0.4</maven>
 	</prerequisites>
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>${version.maven.plugin.jar}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>${version.maven.plugin.deploy}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>${version.maven.plugin.site}</version>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -107,7 +126,7 @@
 			<plugin>
 				<groupId>com.mycila</groupId>
 				<artifactId>license-maven-plugin</artifactId>
-				<version>2.6</version>
+				<version>${version.maven.plugin.license}</version>
 				<configuration>
 					<header>com/mycila/maven/plugin/license/templates/APACHE-2.txt</header>
 					<properties>
