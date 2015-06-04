@@ -96,6 +96,17 @@ public class ModelBuilderTest {
 		testBuildInternal("test-mabxml2.gson");
 	}
 
+	/**
+	 * multiple CSV records to check order
+	 *
+	 * @throws Exception
+	 */
+	@Test
+	public void testBuild7() throws Exception {
+
+		testBuildInternal("test-csv.gson");
+	}
+
 	private void testBuildInternal(final String testModelFile) throws Exception {
 
 		final String inputJSONString = TestUtil.getResourceAsString(testModelFile);
