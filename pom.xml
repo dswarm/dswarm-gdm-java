@@ -21,7 +21,7 @@
 
 	<groupId>org.dswarm</groupId>
 	<artifactId>graph-json</artifactId>
-	<version>0.0.4-SNAPSHOT</version>
+	<version>0.0.5-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<url>http://dswarm.org/</url>
@@ -49,6 +49,8 @@
 		<junit.version>4.12</junit.version>
 		<google.guava.version>19.0</google.guava.version>
 		<rxjava.version>1.1.9</rxjava.version>
+		<version.slf4j.api>1.7.21</version.slf4j.api>
+		<version.logback>1.1.7</version.logback>
 	</properties>
 
 	<prerequisites>
@@ -240,6 +242,23 @@
 			<groupId>io.reactivex</groupId>
 			<artifactId>rxjava</artifactId>
 			<version>${rxjava.version}</version>
+		</dependency>
+		<!-- Logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${version.slf4j.api}</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${version.logback}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-api</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 </project>
