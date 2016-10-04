@@ -61,10 +61,24 @@ public class UtilTest {
 		final String modelJSONString = TestUtil.getResourceAsString("test-mabxml.gson");
 		final Model model = Util.getJSONObjectMapper().readValue(modelJSONString, Model.class);
 
-		final JsonNode gdmCompactJSON = Util.toGDMSimpleJSON(model, getRecordURIs(model));
+		final JsonNode gdmSimpleJSON = Util.toGDMSimpleJSON(model, getRecordURIs(model));
 
 		final String expectedResult = TestUtil.getResourceAsString("test-mabxml.gdm.simple.json");
-		final String actualResult = objectMapper.writeValueAsString(gdmCompactJSON);
+		final String actualResult = objectMapper.writeValueAsString(gdmSimpleJSON);
+
+		Assert.assertEquals(expectedResult, actualResult);
+	}
+
+	@Test
+	public void toJSONTest() throws IOException {
+
+		final String modelJSONString = TestUtil.getResourceAsString("test-mabxml.gson");
+		final Model model = Util.getJSONObjectMapper().readValue(modelJSONString, Model.class);
+
+		final JsonNode json = Util.toJSON(model, getRecordURIs(model));
+
+		final String expectedResult = TestUtil.getResourceAsString("test-mabxml.json");
+		final String actualResult = objectMapper.writeValueAsString(json);
 
 		Assert.assertEquals(expectedResult, actualResult);
 	}

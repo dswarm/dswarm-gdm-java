@@ -16,6 +16,7 @@
 package org.dswarm.graph.json.util;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -31,6 +32,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.dswarm.common.web.URI;
 import org.dswarm.graph.json.LiteralNode;
 import org.dswarm.graph.json.Model;
 import org.dswarm.graph.json.Node;
@@ -96,14 +98,14 @@ public class Util {
 
 		if (model == null) {
 
-			Util.LOG.debug("model is null, can't convert model to JSON");
+			Util.LOG.debug("model is null, can't convert model to GDM Compact JSON");
 
 			return null;
 		}
 
 		if (recordURIs == null) {
 
-			Util.LOG.debug("resource URI is null, can't convert model to JSON");
+			Util.LOG.debug("resource URI is null, can't convert model to GDM Compact JSON");
 
 			return null;
 		}
@@ -246,14 +248,14 @@ public class Util {
 
 		if (model == null) {
 
-			LOG.debug("model is null, can't convert model to JSON");
+			LOG.debug("model is null, can't convert model to GDM simple JSON");
 
 			return null;
 		}
 
 		if (recordURIs == null) {
 
-			LOG.debug("resource URI is null, can't convert model to JSON");
+			LOG.debug("resource URI is null, can't convert model to GDM simple JSON");
 
 			return null;
 		}
@@ -294,6 +296,76 @@ public class Util {
 			}
 
 			convertToGDMSimpleJSON(recordResource, recordResourceNode, json, json);
+
+			if (json == null) {
+
+				// TODO: maybe log something here
+
+				continue;
+			}
+
+			final ObjectNode resourceJson = Util.getJSONObjectMapper().createObjectNode();
+
+			resourceJson.set(resourceURI, json);
+			jsonArray.add(resourceJson);
+		}
+
+		return jsonArray;
+	}
+
+	public static JsonNode toJSON(final Model model, final Set<String> recordURIs) {
+
+		if (model == null) {
+
+			LOG.debug("model is null, can't convert model to JSON");
+
+			return null;
+		}
+
+		if (recordURIs == null) {
+
+			LOG.debug("resource URI is null, can't convert model to JSON");
+
+			return null;
+		}
+
+		final Iterator<String> iter = recordURIs.iterator();
+
+		if (!iter.hasNext()) {
+
+			// no entries
+
+			return null;
+		}
+
+		final ArrayNode jsonArray = Util.getJSONObjectMapper().createArrayNode();
+		final Map<String, URI> uriMap = new HashMap<>();
+
+		while (iter.hasNext()) {
+
+			final String resourceURI = iter.next();
+			final Resource recordResource = model.getResource(resourceURI);
+
+			if (recordResource == null) {
+
+				LOG.debug("couldn't find record resource for record  uri '{}' in model", resourceURI);
+
+				return null;
+			}
+
+			final ObjectNode json = Util.getJSONObjectMapper().createObjectNode();
+
+			// determine record resource node from statements of the record resource
+			final ResourceNode recordResourceNode = Util.getResourceNode(resourceURI, recordResource);
+
+			if (recordResourceNode == null) {
+
+				LOG.debug("couldn't find record resource node for record  uri '{}' in model", resourceURI);
+
+				return null;
+			}
+
+			convertToJSON(recordResource, recordResourceNode, json, json, uriMap);
 
 			if (json == null) {
 
@@ -366,6 +438,73 @@ public class Util {
 			final JsonNode jsonNode = convertToGDMSimpleJSON(recordResource, gdmNode, rootJson, objectNode);
 
 			ConverterHelperGDMHelper2.addJSONNodeToConverterHelper(converterHelpers, propertyURI, jsonNode);
+		}
+
+		for (final Map.Entry<String, ConverterHelper2> converterHelperEntry : converterHelpers.entrySet()) {
+
+			converterHelperEntry.getValue().build(json);
+		}
+
+		return json;
+	}
+
+	private static JsonNode convertToJSON(final Resource recordResource,
+	                                      final Node resourceNode,
+	                                      final ObjectNode rootJson,
+	                                      final ObjectNode json,
+	                                      final Map<String, URI> uriMap) {
+
+		final Map<String, ConverterHelper2> converterHelpers = new LinkedHashMap<>();
+
+		// filter record resource statements to statements for subject uri/id (resource node))
+		final Set<Statement> statements = Util.getResourceStatement(resourceNode, recordResource);
+
+		for (final Statement statement : statements) {
+
+			final String propertyURI = statement.getPredicate().getUri();
+			final String localName = getOrAddLocalName(propertyURI, uriMap);
+			final Node gdmNode = statement.getObject();
+
+			if (gdmNode instanceof LiteralNode) {
+
+				ConverterHelperGDMHelper2.addLiteralToConverterHelper(converterHelpers, localName, gdmNode);
+
+				continue;
+			}
+
+			if (gdmNode instanceof ResourceNode) {
+
+				final ResourceNode object = (ResourceNode) gdmNode;
+
+				// filter record resource statements to statements for object uri (object node))
+				final Set<Statement> objectStatements = Util.getResourceStatement(object, recordResource);
+
+				if (objectStatements == null || objectStatements.isEmpty()) {
+
+					ConverterHelperGDMHelper2.addURIResourceToConverterHelper(converterHelpers, localName, gdmNode);
+
+					continue;
+				}
+
+				// resource has an uri, but is deeper in the hierarchy -> it will be attached to the root json node as separate
+				// entry
+
+				final ObjectNode objectNode = Util.getJSONObjectMapper().createObjectNode();
+
+				final JsonNode jsonNode = convertToJSON(recordResource, object, rootJson, objectNode, uriMap);
+
+				rootJson.set(object.getUri(), jsonNode);
+
+				continue;
+			}
+
+			// node is (/must be) a blank node
+
+			final ObjectNode objectNode = Util.getJSONObjectMapper().createObjectNode();
+
+			final JsonNode jsonNode = convertToJSON(recordResource, gdmNode, rootJson, objectNode, uriMap);
+
+			ConverterHelperGDMHelper2.addJSONNodeToConverterHelper(converterHelpers, localName, jsonNode);
 		}
 
 		for (final Map.Entry<String, ConverterHelper2> converterHelperEntry : converterHelpers.entrySet()) {
@@ -568,5 +707,10 @@ public class Util {
 		}
 
 		return resourceStatements;
+	}
+
+	private static String getOrAddLocalName(final String uri, final Map<String, URI> uriMap) {
+
+		return uriMap.computeIfAbsent(uri, uri1 -> new URI(uri)).getLocalName();
 	}
 }

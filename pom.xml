@@ -51,6 +51,7 @@
 		<rxjava.version>1.2.0</rxjava.version>
 		<version.slf4j.api>1.7.21</version.slf4j.api>
 		<version.logback>1.1.7</version.logback>
+		<version.dswarm.common>0.0.3.3-SNAPSHOT</version.dswarm.common>
 	</properties>
 
 	<prerequisites>
@@ -259,6 +260,11 @@
 					<groupId>org.slf4j</groupId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.dswarm</groupId>
+			<artifactId>common</artifactId>
+			<version>${version.dswarm.common}</version>
 		</dependency>
 	</dependencies>
 </project>
