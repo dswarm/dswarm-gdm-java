@@ -313,7 +313,7 @@ public class Util {
 		return jsonArray;
 	}
 
-	public static JsonNode toJSON(final Model model, final Set<String> recordURIs) {
+	public static JsonNode toGDMSimpleShortJSON(final Model model, final Set<String> recordURIs) {
 
 		if (model == null) {
 
@@ -365,7 +365,7 @@ public class Util {
 				return null;
 			}
 
-			convertToJSON(recordResource, recordResourceNode, json, json, uriMap);
+			convertToGDMSimpleShortJSON(recordResource, recordResourceNode, json, json, uriMap);
 
 			if (json == null) {
 
@@ -448,11 +448,11 @@ public class Util {
 		return json;
 	}
 
-	private static JsonNode convertToJSON(final Resource recordResource,
-	                                      final Node resourceNode,
-	                                      final ObjectNode rootJson,
-	                                      final ObjectNode json,
-	                                      final Map<String, URI> uriMap) {
+	private static JsonNode convertToGDMSimpleShortJSON(final Resource recordResource,
+	                                                    final Node resourceNode,
+	                                                    final ObjectNode rootJson,
+	                                                    final ObjectNode json,
+	                                                    final Map<String, URI> uriMap) {
 
 		final Map<String, ConverterHelper2> converterHelpers = new LinkedHashMap<>();
 
@@ -491,7 +491,7 @@ public class Util {
 
 				final ObjectNode objectNode = Util.getJSONObjectMapper().createObjectNode();
 
-				final JsonNode jsonNode = convertToJSON(recordResource, object, rootJson, objectNode, uriMap);
+				final JsonNode jsonNode = convertToGDMSimpleShortJSON(recordResource, object, rootJson, objectNode, uriMap);
 
 				rootJson.set(object.getUri(), jsonNode);
 
@@ -502,7 +502,7 @@ public class Util {
 
 			final ObjectNode objectNode = Util.getJSONObjectMapper().createObjectNode();
 
-			final JsonNode jsonNode = convertToJSON(recordResource, gdmNode, rootJson, objectNode, uriMap);
+			final JsonNode jsonNode = convertToGDMSimpleShortJSON(recordResource, gdmNode, rootJson, objectNode, uriMap);
 
 			ConverterHelperGDMHelper2.addJSONNodeToConverterHelper(converterHelpers, localName, jsonNode);
 		}

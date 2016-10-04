@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.dswarm.graph.json.test.util;
+package org.dswarm.graph.json.test.util.test;
 
 import java.io.IOException;
 import java.util.LinkedHashSet;
@@ -30,6 +30,7 @@ import org.junit.Test;
 
 import org.dswarm.graph.json.Model;
 import org.dswarm.graph.json.Resource;
+import org.dswarm.graph.json.test.util.TestUtil;
 import org.dswarm.graph.json.util.Util;
 
 /**
@@ -70,14 +71,14 @@ public class UtilTest {
 	}
 
 	@Test
-	public void toJSONTest() throws IOException {
+	public void toGDMSimpleShortJSONTest() throws IOException {
 
 		final String modelJSONString = TestUtil.getResourceAsString("test-mabxml.gson");
 		final Model model = Util.getJSONObjectMapper().readValue(modelJSONString, Model.class);
 
-		final JsonNode json = Util.toJSON(model, getRecordURIs(model));
+		final JsonNode json = Util.toGDMSimpleShortJSON(model, getRecordURIs(model));
 
-		final String expectedResult = TestUtil.getResourceAsString("test-mabxml.json");
+		final String expectedResult = TestUtil.getResourceAsString("test-mabxml.gdm.simple.short.json");
 		final String actualResult = objectMapper.writeValueAsString(json);
 
 		Assert.assertEquals(expectedResult, actualResult);
