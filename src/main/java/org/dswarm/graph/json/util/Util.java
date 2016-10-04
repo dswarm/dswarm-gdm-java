@@ -140,7 +140,7 @@ public class Util {
 				return null;
 			}
 
-			convertGDMCompactJSON(recordResource, recordResourceNode, json, model);
+			convertToGDMCompactJSON(recordResource, recordResourceNode, json, model);
 
 			if (json == null) {
 
@@ -158,7 +158,7 @@ public class Util {
 		return jsonArray;
 	}
 
-	private static JsonNode convertGDMCompactJSON(final Resource recordResource, final Node resourceNode, final ArrayNode json, final Model model) {
+	public static JsonNode convertToGDMCompactJSON(final Resource recordResource, final Node resourceNode, final ArrayNode json, final Model model) {
 
 		final Map<String, ConverterHelper> converterHelpers = new LinkedHashMap<>();
 
@@ -207,7 +207,7 @@ public class Util {
 
 				final ArrayNode objectNode = Util.getJSONObjectMapper().createArrayNode();
 
-				final JsonNode jsonNode = convertGDMCompactJSON(objectResource, object, objectNode, model);
+				final JsonNode jsonNode = convertToGDMCompactJSON(objectResource, object, objectNode, model);
 
 				final ObjectNode recordIdNode = Util.getJSONObjectMapper().createObjectNode();
 				recordIdNode.put(Util.RECORD_ID, object.getUri());
@@ -223,7 +223,7 @@ public class Util {
 
 			final ArrayNode objectNode = Util.getJSONObjectMapper().createArrayNode();
 
-			final JsonNode jsonNode = convertGDMCompactJSON(recordResource, gdmNode, objectNode, model);
+			final JsonNode jsonNode = convertToGDMCompactJSON(recordResource, gdmNode, objectNode, model);
 
 			ConverterHelperGDMHelper.addJSONNodeToConverterHelper(converterHelpers, propertyURI, jsonNode);
 		}
