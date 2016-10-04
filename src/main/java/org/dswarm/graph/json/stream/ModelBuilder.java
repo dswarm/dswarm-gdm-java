@@ -19,6 +19,11 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Set;
 
+import com.fasterxml.jackson.core.JsonEncoding;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonGenerator;
+
 import org.dswarm.graph.json.LiteralNode;
 import org.dswarm.graph.json.Node;
 import org.dswarm.graph.json.NodeType;
@@ -28,17 +33,12 @@ import org.dswarm.graph.json.ResourceNode;
 import org.dswarm.graph.json.Statement;
 import org.dswarm.graph.json.util.Util;
 
-import com.fasterxml.jackson.core.JsonEncoding;
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.core.JsonGenerator;
-
 /**
  * @author tgaengler
  */
 public class ModelBuilder {
 
-	private final JsonGenerator	jg;
+	private final JsonGenerator jg;
 
 	public ModelBuilder(final OutputStream modelStreamArg) throws IOException {
 
@@ -48,10 +48,12 @@ public class ModelBuilder {
 		init();
 	}
 
-	private static void checkNotNull(final Object object, final String message) throws JsonGenerationException {
+	private void checkNotNull(final Object object,
+	                          final String message) throws JsonGenerationException {
+
 		if (object == null) {
 
-			throw new JsonGenerationException(message);
+			throw new JsonGenerationException(message, jg);
 		}
 	}
 
@@ -112,21 +114,21 @@ public class ModelBuilder {
 
 		final Long order = statement.getOrder();
 
-		if(order != null) {
+		if (order != null) {
 
 			jg.writeNumberField(ModelStatics.ORDER_IDENTIFIER, order);
 		}
 
 		final String evidence = statement.getEvidence();
 
-		if(evidence != null) {
+		if (evidence != null) {
 
 			jg.writeStringField(ModelStatics.EVIDENCE_IDENTIFIER, evidence);
 		}
 
 		final String confidence = statement.getConfidence();
 
-		if(confidence != null) {
+		if (confidence != null) {
 
 			jg.writeStringField(ModelStatics.CONFIDENCE_IDENTIFIER, confidence);
 		}
@@ -166,7 +168,7 @@ public class ModelBuilder {
 			default:
 
 				throw new JsonGenerationException(String.format("couldn't write Statement JSON, didn't expect '%s' node type at subject position",
-						nodeType.getName()));
+						nodeType.getName()), jg);
 		}
 	}
 
@@ -206,7 +208,7 @@ public class ModelBuilder {
 			default:
 
 				throw new JsonGenerationException(String.format("couldn't write Statement JSON, didn't expect '%s' node type at subject position",
-						nodeType.getName()));
+						nodeType.getName()), jg);
 		}
 	}
 

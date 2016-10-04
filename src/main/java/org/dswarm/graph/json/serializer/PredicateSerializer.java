@@ -18,7 +18,6 @@ package org.dswarm.graph.json.serializer;
 import java.io.IOException;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
@@ -32,8 +31,7 @@ import org.dswarm.graph.json.Predicate;
 public class PredicateSerializer extends JsonSerializer<Predicate> {
 
 	@Override
-	public void serialize(final Predicate value, final JsonGenerator jgen, final SerializerProvider provider) throws IOException,
-			JsonProcessingException {
+	public void serialize(final Predicate value, final JsonGenerator jgen, final SerializerProvider provider) throws IOException {
 
 		if (value != null && value.getUri() != null) {
 

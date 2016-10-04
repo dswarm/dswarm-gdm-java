@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.util.Set;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
@@ -32,8 +31,7 @@ import org.dswarm.graph.json.Statement;
 public class ResourceSerializer extends JsonSerializer<Resource> {
 
 	@Override
-	public void serialize(final Resource value, final JsonGenerator jgen, final SerializerProvider provider) throws IOException,
-			JsonProcessingException {
+	public void serialize(final Resource value, final JsonGenerator jgen, final SerializerProvider provider) throws IOException {
 
 		if (value != null && value.getUri() != null) {
 

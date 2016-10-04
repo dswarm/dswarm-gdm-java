@@ -82,7 +82,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 
 		if (subjectNode == null) {
 
-			throw new JsonParseException("expected JSON node that represents the subject of a statement", jp.getCurrentLocation());
+			throw new JsonParseException(jp, "expected JSON node that represents the subject of a statement", jp.getCurrentLocation());
 		}
 
 		final Node subject;
@@ -101,7 +101,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 
 		if (predicateNode == null) {
 
-			throw new JsonParseException("expected JSON node that represents the predicate of a statement", jp.getCurrentLocation());
+			throw new JsonParseException(jp, "expected JSON node that represents the predicate of a statement", jp.getCurrentLocation());
 		}
 
 		final Predicate predicate = predicateNode.traverse(oc).readValueAs(Predicate.class);
@@ -110,7 +110,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 
 		if (objectNode == null) {
 
-			throw new JsonParseException("expected JSON node that represents the object of a statement", jp.getCurrentLocation());
+			throw new JsonParseException(jp, "expected JSON node that represents the object of a statement", jp.getCurrentLocation());
 		}
 
 		final Node object;

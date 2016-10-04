@@ -52,7 +52,7 @@ public class ModelDeserializer extends JsonDeserializer<Model> {
 
 		if (!ArrayNode.class.isInstance(node)) {
 
-			throw new JsonParseException("expected a JSON array full of resource objects of the model", jp.getCurrentLocation());
+			throw new JsonParseException(jp, "expected a JSON array full of resource objects of the model", jp.getCurrentLocation());
 		}
 
 		if (node.size() <= 0) {

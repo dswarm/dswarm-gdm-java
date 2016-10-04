@@ -76,7 +76,7 @@ public class ResourceDeserializer extends JsonDeserializer<Resource> {
 
 		if(!ArrayNode.class.isInstance(resourceNode)) {
 
-			throw new JsonParseException("expected a JSON array full of statement objects of the resource", jp.getCurrentLocation());
+			throw new JsonParseException(jp, "expected a JSON array full of statement objects of the resource", jp.getCurrentLocation());
 		}
 
 		final Resource resource = new Resource(resourceUri);
