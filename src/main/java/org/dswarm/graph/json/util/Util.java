@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -317,6 +317,76 @@ public class Util {
 
 		if (model == null) {
 
+			LOG.debug("model is null, can't convert model to GDM simple short JSON");
+
+			return null;
+		}
+
+		if (recordURIs == null) {
+
+			LOG.debug("resource URI is null, can't convert model to GDM simple short JSON");
+
+			return null;
+		}
+
+		final Iterator<String> iter = recordURIs.iterator();
+
+		if (!iter.hasNext()) {
+
+			// no entries
+
+			return null;
+		}
+
+		final ArrayNode jsonArray = Util.getJSONObjectMapper().createArrayNode();
+		final Map<String, URI> uriMap = new HashMap<>();
+
+		while (iter.hasNext()) {
+
+			final String resourceURI = iter.next();
+			final Resource recordResource = model.getResource(resourceURI);
+
+			if (recordResource == null) {
+
+				LOG.debug("couldn't find record resource for record  uri '{}' in model", resourceURI);
+
+				return null;
+			}
+
+			final ObjectNode json = Util.getJSONObjectMapper().createObjectNode();
+
+			// determine record resource node from statements of the record resource
+			final ResourceNode recordResourceNode = Util.getResourceNode(resourceURI, recordResource);
+
+			if (recordResourceNode == null) {
+
+				LOG.debug("couldn't find record resource node for record  uri '{}' in model", resourceURI);
+
+				return null;
+			}
+
+			convertToGDMSimpleShortJSON(recordResource, recordResourceNode, json, json, uriMap);
+
+			if (json == null) {
+
+				// TODO: maybe log something here
+
+				continue;
+			}
+
+			final ObjectNode resourceJson = Util.getJSONObjectMapper().createObjectNode();
+
+			resourceJson.set(resourceURI, json);
+			jsonArray.add(resourceJson);
+		}
+
+		return jsonArray;
+	}
+
+	public static JsonNode toJSON(final Model model, final Set<String> recordURIs) {
+
+		if (model == null) {
+
 			LOG.debug("model is null, can't convert model to JSON");
 
 			return null;
@@ -374,10 +444,7 @@ public class Util {
 				continue;
 			}
 
-			final ObjectNode resourceJson = Util.getJSONObjectMapper().createObjectNode();
-
-			resourceJson.set(resourceURI, json);
-			jsonArray.add(resourceJson);
+			jsonArray.add(json);
 		}
 
 		return jsonArray;
