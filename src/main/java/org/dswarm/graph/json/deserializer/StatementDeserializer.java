@@ -1,11 +1,11 @@
 /**
- * Copyright (C) 2013 – 2016 SLUB Dresden & Avantgarde Labs GmbH (<code@dswarm.org>)
+ * Copyright © 2013 – 2016 SLUB Dresden & Avantgarde Labs GmbH (<code@dswarm.org>)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *         http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -82,7 +82,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 
 		if (subjectNode == null) {
 
-			throw new JsonParseException("expected JSON node that represents the subject of a statement", jp.getCurrentLocation());
+			throw new JsonParseException(jp, "expected JSON node that represents the subject of a statement", jp.getCurrentLocation());
 		}
 
 		final Node subject;
@@ -101,7 +101,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 
 		if (predicateNode == null) {
 
-			throw new JsonParseException("expected JSON node that represents the predicate of a statement", jp.getCurrentLocation());
+			throw new JsonParseException(jp, "expected JSON node that represents the predicate of a statement", jp.getCurrentLocation());
 		}
 
 		final Predicate predicate = predicateNode.traverse(oc).readValueAs(Predicate.class);
@@ -110,7 +110,7 @@ public class StatementDeserializer extends JsonDeserializer<Statement> {
 
 		if (objectNode == null) {
 
-			throw new JsonParseException("expected JSON node that represents the object of a statement", jp.getCurrentLocation());
+			throw new JsonParseException(jp, "expected JSON node that represents the object of a statement", jp.getCurrentLocation());
 		}
 
 		final Node object;

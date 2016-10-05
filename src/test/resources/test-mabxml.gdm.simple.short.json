@@ -1,0 +1,195 @@
+[ {
+  "http://data.slub-dresden.de/records/e9e1fa5a-3350-43ec-bb21-6ccfa90a4497" : {
+    "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#datensatzType",
+    "typ" : "h",
+    "status" : "n",
+    "mabVersion" : "M2.0",
+    "feld" : [ {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "001",
+      "ind" : " ",
+      "value" : "06978834"
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "002",
+      "ind" : "a",
+      "value" : "19981028"
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "003",
+      "ind" : " ",
+      "value" : "20010620"
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "005",
+      "ind" : "n",
+      "value" : "20011121"
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "029",
+      "ind" : "m",
+      "value" : "MB"
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "030",
+      "ind" : " ",
+      "value" : "az1dcr|||||37"
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "037",
+      "ind" : "z",
+      "value" : "dt."
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "050",
+      "ind" : " ",
+      "value" : "|||||c||||||||"
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "051",
+      "ind" : " ",
+      "value" : "n||||||"
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "070",
+      "ind" : " ",
+      "value" : "KNUB"
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "070",
+      "ind" : "b",
+      "value" : "FRhk"
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "076",
+      "ind" : "n",
+      "value" : "098301"
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "076",
+      "ind" : "k",
+      "value" : "101171"
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "076",
+      "ind" : "v",
+      "value" : "5"
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "077",
+      "ind" : "p",
+      "value" : [ "00872805", "Roll, Gernot" ],
+      "tf" : {
+        "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#tfType"
+      }
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "077",
+      "ind" : "p",
+      "value" : [ "00872284", "Thomas, Eugen" ],
+      "tf" : {
+        "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#tfType"
+      }
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "100",
+      "ind" : "b",
+      "value" : "Wirth, Franz Peter"
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "102",
+      "ind" : " ",
+      "value" : "00412254"
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "104",
+      "ind" : "b",
+      "value" : "Mann, Golo"
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "106",
+      "ind" : " ",
+      "value" : "00243077"
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "108",
+      "ind" : "b",
+      "value" : "Ahlsen, Leopold"
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "110",
+      "ind" : " ",
+      "value" : "00004514"
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "112",
+      "ind" : "b",
+      "value" : "Boysen, Rolf"
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "114",
+      "ind" : " ",
+      "value" : "00045374"
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "116",
+      "ind" : "b",
+      "value" : "Pekny, Romuald"
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "118",
+      "ind" : " ",
+      "value" : "00465696"
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "120",
+      "ind" : "b",
+      "value" : "Kreindl, Werner"
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "122",
+      "ind" : " ",
+      "value" : "00209123"
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "331",
+      "ind" : " ",
+      "value" : "Wallenstein"
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "334",
+      "ind" : " ",
+      "value" : "Bildtonträger"
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "335",
+      "ind" : " ",
+      "value" : "nach der Biographie von Golo Mann für das Fernsehen erzählt von Leopold Ahlsen"
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "359",
+      "ind" : " ",
+      "value" : "[Darsteller:] Rolf Boysen, Romuald Pekny, Werner Kreindl ... Kamera: Gernot Roll ... Musik: Eugen Thomas. Regie: Franz Peter Wirth"
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "410",
+      "ind" : " ",
+      "value" : "[Mainz]"
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "412",
+      "ind" : " ",
+      "value" : "ZDF [u.a.]"
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "433",
+      "ind" : " ",
+      "value" : "Videokassetten"
+    }, {
+      "type" : "http://www.ddb.de/professionell/mabxml/mabxml-1.xsd#feldType",
+      "nr" : "501",
+      "ind" : " ",
+      "value" : "Fernsehfilm, BRD 1978"
+    } ]
+  }
+} ]
